@@ -1,5 +1,10 @@
 // Main application logic
 
+// Determine base path (for GitHub Pages compatibility)
+const basePath = window.location.pathname.includes('What-a-Mess-Archives') 
+    ? '/What-a-Mess-Archives/'
+    : '/';
+
 // Data storage
 let specimens = [];
 let aggregates = [];
@@ -17,7 +22,7 @@ const sections = document.querySelectorAll('.section');
 // Load data from JSON file
 async function loadData() {
     try {
-        const response = await fetch('js/data.json');
+        const response = await fetch(`${basePath}js/data.json`);
         if (!response.ok) throw new Error('Failed to load data');
         const data = await response.json();
         specimens = data.specimens;
@@ -42,7 +47,7 @@ function init() {
 function renderSpecimens() {
     specimensGrid.innerHTML = specimens.map(specimen => `
         <div class="card" data-type="specimen" data-id="${specimen.id}">
-            <img src="${specimen.thumbnail}" alt="${specimen.title}" class="card-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22280%22%3E%3Crect fill=%22%23f5f2ed%22 width=%22400%22 height=%22280%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22monospace%22 font-size=%2216%22 fill=%22%236b6560%22%3E3D Model Placeholder%3C/text%3E%3C/svg%3E'">
+            <img src="${basePath}${specimen.thumbnail}" alt="${specimen.title}" class="card-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22280%22%3E%3Crect fill=%22%23f5f2ed%22 width=%22400%22 height=%22280%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22monospace%22 font-size=%2216%22 fill=%22%236b6560%22%3E3D Model Placeholder%3C/text%3E%3C/svg%3E'">
             <div class="card-content">
                 <h3 class="card-title">${specimen.title}</h3>
                 <div class="card-meta">${specimen.location} • ${formatDate(specimen.date)}</div>
@@ -59,7 +64,7 @@ function renderSpecimens() {
 function renderAggregates() {
     aggregatesGrid.innerHTML = aggregates.map(aggregate => `
         <div class="card" data-type="aggregate" data-id="${aggregate.id}">
-            <img src="${aggregate.thumbnail}" alt="${aggregate.title}" class="card-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22280%22%3E%3Crect fill=%22%23f5f2ed%22 width=%22400%22 height=%22280%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22monospace%22 font-size=%2216%22 fill=%22%236b6560%22%3EAggregate Collection%3C/text%3E%3C/svg%3E'">
+            <img src="${basePath}${aggregate.thumbnail}" alt="${aggregate.title}" class="card-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22280%22%3E%3Crect fill=%22%23f5f2ed%22 width=%22400%22 height=%22280%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22monospace%22 font-size=%2216%22 fill=%22%236b6560%22%3EAggregate Collection%3C/text%3E%3C/svg%3E'">
             <div class="card-content">
                 <h3 class="card-title">${aggregate.title}</h3>
                 <div class="card-meta">${aggregate.specimenIds.length} specimens • ${formatDate(aggregate.dateCreated)}</div>
@@ -131,7 +136,7 @@ function openSpecimenModal(id) {
     modalBody.innerHTML = `
         <div class="detail-viewer">
             <model-viewer
-                src="${specimen.modelPath}"
+                src="${basePath}${specimen.modelPath}"
                 alt="${specimen.title}"
                 camera-controls
                 auto-rotate
