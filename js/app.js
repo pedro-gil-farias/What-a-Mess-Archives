@@ -1,7 +1,8 @@
 // Main application logic
 
-// Get data from data.js
-const { specimens, aggregates } = window.archiveData;
+// Data storage
+let specimens = [];
+let aggregates = [];
 
 // DOM elements
 const specimensGrid = document.getElementById('specimens-grid');
@@ -12,6 +13,22 @@ const modalClose = document.querySelector('.modal-close');
 const modalOverlay = document.querySelector('.modal-overlay');
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('.section');
+
+// Load data from JSON file
+async function loadData() {
+    try {
+        const response = await fetch('js/data.json');
+        if (!response.ok) throw new Error('Failed to load data');
+        const data = await response.json();
+        specimens = data.specimens;
+        aggregates = data.aggregates;
+        init();
+    } catch (error) {
+        console.error('Error loading data:', error);
+        specimensGrid.innerHTML = '<p>Error loading specimens data</p>';
+        aggregatesGrid.innerHTML = '<p>Error loading aggregates data</p>';
+    }
+}
 
 // Initialize the app
 function init() {
@@ -234,5 +251,5 @@ function formatDate(dateString) {
     });
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
+// Load data and initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', loadData);
