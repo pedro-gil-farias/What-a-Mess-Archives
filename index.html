@@ -10,7 +10,7 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <h1 class="site-title">Archive</h1>
+            <h1 class="site-title">What A Mess Archives</h1>
             <nav class="main-nav">
                 <a href="#specimens" class="nav-link active" data-section="specimens">Specimens</a>
                 <a href="#aggregates" class="nav-link" data-section="aggregates">Aggregates</a>
@@ -20,13 +20,31 @@
     </header>
 
     <main class="main-content">
+        
         <!-- Specimens Section -->
         <section id="specimens" class="section active">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Specimens</h2>
                     <p class="section-description">Artistic 3D scans of public spaces across cities</p>
                 </div>
+                
+                <!-- Sort Controls -->
+                <div class="sort-controls">
+                    <span class="sort-label">Sort by:</span>
+                    <button class="sort-btn" data-sort="id" data-tooltip="Sort by ID" aria-label="Sort by ID"><svg width="1em" height="1em" viewBox="0 0 16 16" stroke-width="1" fill="none" xmlns="http://www.w3.org/2000/svg"> <line x1="1.65182" y1="4.96271" x2="15.8118" y2="4.96271" stroke="black"/> <line y1="10.7369" x2="14.16" y2="10.7369" stroke="black"/> <path d="M13.5309 0.230702L9.22586 15.8239" stroke="black"/> <line x1="1.69525" y1="15.8526" x2="6.30541" y2="0.140775" stroke="black"/> </svg> </button>
+                    <button class="sort-btn" data-sort="date" data-tooltip="Sort by Date" aria-label="Sort by Date"><svg width="16" height="16" viewBox="0 0 16 16" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M14.5098 6.55176H12.5098V4.55176H14.5098V6.55176Z" fill="black"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M2.40332 1H13.5967V0H14.5967V1H16V16H0V1H1.40332V0H2.40332V1ZM0.5 15.5H15.5V3.55762H0.5V15.5Z" fill="black"/> </svg> </button>
+                    <button class="sort-btn" data-sort="latitude" data-tooltip="Sort by latitude" aria-label="Sort by latitude"><svg width="16" height="16" viewBox="0 0 16 16" stroke-width="1" fill="none" xmlns="http://www.w3.org/2000/svg"> <circle cx="8" cy="8" r="7.5" stroke="black"/> <circle cx="8" cy="8" r="7.5" stroke="black"/> <circle cx="8" cy="8" r="7.5" stroke="black"/> <line x1="2.48692" y1="3.26119" x2="13.5131" y2="3.26119" stroke="black"/> <line x1="0.5" y1="6.47181" x2="15.5" y2="6.47181" stroke="black"/> <line x1="0.5" y1="9.68243" x2="15.5" y2="9.68243" stroke="black"/> <line x1="2.48692" y1="12.893" x2="13.5131" y2="12.893" stroke="black"/> </svg>  </svg> </button>
+                    <button class="sort-btn" data-sort="longitude" data-tooltip="Sort by longitude" aria-label="Sort by longitude"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M8.25 0.00585938C12.5526 0.137965 16 3.66538 16 8C16 12.3346 12.5526 15.861 8.25 15.9932V16H7.75V15.9932C3.44744 15.861 0 12.3346 0 8C0 3.66538 3.44743 0.137965 7.75 0.00585938V0H8.25V0.00585938ZM7.75 0.733398C7.71906 0.776292 7.68614 0.825661 7.65234 0.882812C7.44815 1.22828 7.24696 1.76217 7.07129 2.46484C6.72192 3.86249 6.5 5.81959 6.5 8C6.5 10.1804 6.72192 12.1375 7.07129 13.5352C7.24696 14.2378 7.44815 14.7717 7.65234 15.1172C7.68597 15.1741 7.7192 15.2229 7.75 15.2656V0.733398ZM8.25 15.2656C8.2808 15.2229 8.31403 15.1741 8.34766 15.1172C8.55185 14.7717 8.75304 14.2378 8.92871 13.5352C9.27808 12.1375 9.5 10.1804 9.5 8C9.5 5.81959 9.27808 3.86249 8.92871 2.46484C8.75304 1.76217 8.55185 1.22828 8.34766 0.882812C8.31386 0.825661 8.28094 0.776292 8.25 0.733398V15.2656ZM7.16211 0.734375C6.61659 1.03947 6.0799 1.64503 5.61914 2.56641C4.93681 3.93106 4.5 5.85165 4.5 8C4.5 10.1483 4.93681 12.0689 5.61914 13.4336C6.07978 14.3547 6.61673 14.9595 7.16211 15.2646C6.4764 13.9962 6 11.2205 6 8C6 4.77886 6.47618 2.00249 7.16211 0.734375ZM8.83691 0.734375C9.52296 2.0023 10 4.77851 10 8C10 11.2209 9.52274 13.9964 8.83691 15.2646C9.38255 14.9596 9.92001 14.3552 10.3809 13.4336C11.0632 12.0689 11.5 10.1483 11.5 8C11.5 5.85165 11.0632 3.93106 10.3809 2.56641C9.91989 1.64461 9.38269 1.03934 8.83691 0.734375ZM6.09082 0.96875C5.36941 1.33502 4.71109 1.90507 4.15723 2.64355C3.1425 3.99669 2.5 5.88875 2.5 8C2.5 10.1112 3.1425 12.0033 4.15723 13.3564C4.71099 14.0948 5.36956 14.664 6.09082 15.0303C4.84569 13.6745 4 11.0349 4 8C4 4.96467 4.84543 2.32436 6.09082 0.96875ZM9.9082 0.96875C11.1538 2.32422 12 4.96431 12 8C12 11.0353 11.1536 13.6746 9.9082 15.0303C10.6298 14.664 11.2888 14.0951 11.8428 13.3564C12.8575 12.0033 13.5 10.1112 13.5 8C13.5 5.88875 12.8575 3.99669 11.8428 2.64355C11.2887 1.9048 10.6299 1.33501 9.9082 0.96875ZM4.84375 1.19531C2.2788 2.38704 0.5 4.98548 0.5 8C0.5 11.0144 2.279 13.6119 4.84375 14.8037C3.13721 13.3932 2 10.8739 2 8C2 5.12579 3.13694 2.60576 4.84375 1.19531ZM11.1553 1.19531C12.8624 2.60567 14 5.12546 14 8C14 10.8743 12.8621 13.3933 11.1553 14.8037C13.7205 13.6121 15.5 11.0147 15.5 8C15.5 4.98517 13.7207 2.38687 11.1553 1.19531Z" fill="black"/> </svg> </button>
+                    <!-- Randomize order -->
+                    <button class="sort-btn" data-sort="random" data-tooltip="Randomize specimens" aria-label="Randomize specimens">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 3h5v5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 20h5l9-9" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20 4l-9 9" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                
                 <div id="specimens-grid" class="grid">
                     <!-- Populated by JavaScript -->
                 </div>

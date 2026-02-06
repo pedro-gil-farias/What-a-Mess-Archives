@@ -2,14 +2,14 @@
     --color-bg: #faf8f5;
     --color-text: #1a1714;
     --color-text-light: #6b6560;
-    --color-accent: #d4462c;
+    --color-accent: #514f4d;
     --color-border: #ddd6ce;
     --color-surface: #ffffff;
     --color-hover: #f5f2ed;
     
-    --font-display: 'Playfair Display', Georgia, serif;
-    --font-body: 'Crimson Pro', Georgia, serif;
-    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --font-display: sans-serif;
+    --font-body: sans-serif;
+    --font-mono: sans-serif;
     
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -40,14 +40,15 @@ body {
 }
 
 .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 /* Header */
 .site-header {
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 0px solid var(--color-border);
     background: var(--color-surface);
     position: sticky;
     top: 0;
@@ -58,18 +59,19 @@ body {
 
 .site-header .container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding-top: var(--spacing-md);
     padding-bottom: var(--spacing-md);
+    gap: var(--spacing-md);
 }
 
 .site-title {
     font-family: var(--font-display);
-    font-size: 2.5rem;
+    font-size: 1rem;
     font-weight: 900;
     letter-spacing: -0.02em;
-    text-transform: uppercase;
 }
 
 .main-nav {
@@ -82,7 +84,6 @@ body {
     font-size: 0.85rem;
     text-decoration: none;
     color: var(--color-text-light);
-    text-transform: uppercase;
     letter-spacing: 0.05em;
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius);
@@ -98,7 +99,6 @@ body {
     transform: translateX(-50%) scaleX(0);
     width: 80%;
     height: 2px;
-    background: var(--color-accent);
     transition: transform var(--transition);
 }
 
@@ -114,12 +114,11 @@ body {
 /* Main Content */
 .main-content {
     min-height: calc(100vh - 100px);
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-xs) 0;
 }
 
 .section {
     display: none;
-    animation: fadeIn 0.5s ease-out;
 }
 
 .section.active {
@@ -142,14 +141,6 @@ body {
     text-align: center;
 }
 
-.section-title {
-    font-family: var(--font-display);
-    font-size: 4rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin-bottom: var(--spacing-sm);
-}
-
 .section-description {
     font-size: 1.1rem;
     color: var(--color-text-light);
@@ -157,21 +148,107 @@ body {
     font-style: italic;
 }
 
+/* Sort Controls */
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.sort-label {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    font-weight: 600;
+}
+
+.sort-btn {
+    padding: var(--spacing-xs) var(--spacing-xs);
+    border: 0px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.sort-btn:hover {
+    border-color: var(--color-text-light);
+    background: var(--color-hover);
+}
+
+.sort-btn.active {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-surface);
+}
+
+.sort-btn.active .icon {
+    transform: scaleY(1);
+}
+
+.sort-btn .icon {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    flex-shrink: 0;
+    transition: transform var(--transition);
+    color: currentColor;
+}
+
+.sort-btn[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 4px;
+  background: var(--color-text-light);
+  color: var(--color-surface);
+  font-size: 10px;
+  white-space: nowrap;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  margin-bottom: 8px;
+}
+
+.sort-btn[data-tooltip]:hover::after {
+  opacity: 1;
+}
+
+.sort-btn[data-tooltip]:hover::before {
+  opacity: 1;
+}
+
 /* Grid */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-xl);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
 }
 
 .card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: transparent;
+    border: none;
     cursor: pointer;
     transition: all var(--transition);
     overflow: hidden;
     position: relative;
+    padding: 0;
 }
 
 .card::before {
@@ -187,22 +264,31 @@ body {
     pointer-events: none;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(26, 23, 20, 0.12);
-    border-color: var(--color-accent);
+/* Show the tooltip text on hover */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 
-.card:hover::before {
-    opacity: 1;
+.card:hover {
+    opacity: 0.25;
+    /* no border for minimal cards */
+}
+
+/* Make card images square and cover the area */
+.card-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-fit: cover;
 }
 
 .card-image {
     width: 100%;
-    height: 280px;
+    aspect-ratio: 1 / 1;
+    height: auto;
     object-fit: cover;
     display: block;
-    background: var(--color-hover);
 }
 
 .card-content {

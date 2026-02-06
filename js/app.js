@@ -8,6 +8,8 @@ const basePath = window.location.pathname.includes('What-a-Mess-Archives')
 // Data storage
 let specimens = [];
 let aggregates = [];
+let currentSort = 'id';
+let currentDirection = 'asc';
 
 // DOM elements
 const specimensGrid = document.getElementById('specimens-grid');
@@ -37,27 +39,24 @@ async function loadData() {
 
 // Initialize the app
 function init() {
-    renderSpecimens();
+    setupSorting();
+    applySort();
     renderAggregates();
     setupNavigation();
     setupModal();
 }
 
-// Render specimen cards
-function renderSpecimens() {
-    specimensGrid.innerHTML = specimens.map(specimen => `
+// Render specimen cards (minimal: image only)
+function renderSpecimens(specimensList = specimens) {
+    specimensGrid.innerHTML = specimensList.map(specimen => `
         <div class="card" data-type="specimen" data-id="${specimen.id}">
             <img src="${basePath}${specimen.thumbnail}" alt="${specimen.title}" class="card-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22280%22%3E%3Crect fill=%22%23f5f2ed%22 width=%22400%22 height=%22280%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22monospace%22 font-size=%2216%22 fill=%22%236b6560%22%3E3D Model Placeholder%3C/text%3E%3C/svg%3E'">
-            <div class="card-content">
-                <h3 class="card-title">${specimen.title}</h3>
-                <div class="card-meta">${specimen.location} • ${formatDate(specimen.date)}</div>
-                <p class="card-description">${specimen.description}</p>
-                <div class="card-tags">
-                    ${specimen.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                </div>
-            </div>
         </div>
     `).join('');
+
+    if (specimensList.length === 0) {
+        specimensGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: var(--spacing-lg); color: var(--color-text-light);">No specimens available.</p>';
+    }
 }
 
 // Render aggregate cards
@@ -97,6 +96,107 @@ function setupNavigation() {
             });
         });
     });
+}
+
+// Setup sorting
+function setupSorting() {
+    const sortBtns = document.querySelectorAll('.sort-btn');
+    sortBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            // Use the button element so clicks on inner SVGs still work
+            const newSort = btn.getAttribute('data-sort');
+
+            if (newSort === 'random') {
+                // Always select random and reshuffle (no asc/desc toggle)
+                currentSort = 'random';
+                currentDirection = 'asc';
+            } else {
+                // If same button clicked, toggle direction
+                if (currentSort === newSort) {
+                    currentDirection = currentDirection === 'asc' ? 'desc' : 'asc';
+                } else {
+                    // New button, reset to ascending
+                    currentSort = newSort;
+                    currentDirection = 'asc';
+                }
+            }
+
+            updateSortUI();
+            applySort();
+        });
+    });
+    
+    // Set initial active button
+    updateSortUI();
+}
+
+// Update sort button UI
+function updateSortUI() {
+    const sortBtns = document.querySelectorAll('.sort-btn');
+    const directionDisplay = document.getElementById('sort-direction-display');
+    
+    sortBtns.forEach(btn => {
+        if (btn.getAttribute('data-sort') === currentSort) {
+            btn.classList.add('active');
+            if (currentSort === 'random') {
+                btn.setAttribute('data-direction', '⟳');
+            } else {
+                btn.setAttribute('data-direction', currentDirection === 'asc' ? '↑' : '↓');
+            }
+        } else {
+            btn.classList.remove('active');
+            btn.removeAttribute('data-direction');
+        }
+    });
+    
+    // Update direction indicator
+    if (directionDisplay) {
+        directionDisplay.textContent = currentDirection === 'asc' ? '↑' : '↓';
+    }
+}
+
+// Apply sort
+function applySort() {
+    let sorted = [...specimens];
+    const isAscending = currentDirection === 'asc';
+    
+    switch (currentSort) {
+        case 'id':
+            sorted.sort((a, b) => isAscending 
+                ? a.id.localeCompare(b.id)
+                : b.id.localeCompare(a.id));
+            break;
+        case 'date':
+            sorted.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return isAscending ? dateA - dateB : dateB - dateA;
+            });
+            break;
+        case 'latitude':
+            sorted.sort((a, b) => {
+                const latA = parseFloat(a.latitude || 0);
+                const latB = parseFloat(b.latitude || 0);
+                return isAscending ? latA - latB : latB - latA;
+            });
+            break;
+        case 'longitude':
+            sorted.sort((a, b) => {
+                const lonA = parseFloat(a.longitude || 0);
+                const lonB = parseFloat(b.longitude || 0);
+                return isAscending ? lonA - lonB : lonB - lonA;
+            });
+            break;
+        case 'random':
+            // Fisher-Yates shuffle for random ordering
+            for (let i = sorted.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [sorted[i], sorted[j]] = [sorted[j], sorted[i]];
+            }
+            break;
+    }
+    
+    renderSpecimens(sorted);
 }
 
 // Setup modal functionality

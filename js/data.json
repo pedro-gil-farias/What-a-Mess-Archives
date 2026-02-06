@@ -4,13 +4,67 @@
       "id": "S022",
       "title": "S022_MaritimeSnail",
       "location": "Rotterdam, The Netherlands",
-      "date": "2024-03-15",
+      "latitude": 52.5200,
+      "longitude": 13.4050,
+      "date": "2023-04-03",
       "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
       "tags": ["urban", "berlin", "street art", "architecture"],
       "modelPath": "models/S022_MaritimeSnail.glb",
-      "thumbnail": "images/S022_MaritimeSnail.png",
-      "coordinates": "52.5200° N, 13.4050° E"
+      "thumbnail": "images/S022_MaritimeSnail.png"
+    },
+
+    {
+      "id": "S023",
+      "title": "S023_RustyEntrance",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.915826,
+      "longitude": 4.476486,
+      "date": "2023-03-17",
+      "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
+      "tags": ["urban", "rotterdam", "street art", "architecture"],
+      "modelPath": "models/S023_RustyEntrance.glb",
+      "thumbnail": "images/S023_RustyEntrance.png"
+    },
+
+    {
+      "id": "S024",
+      "title": "S024_ClearSign",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.915884,
+      "longitude": 4.476879,
+      "date": "2023-03-17",
+      "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
+      "tags": ["urban", "rotterdam", "street art", "architecture"],
+      "modelPath": "models/S024_ClearSign.glb",
+      "thumbnail": "images/S024_ClearSign.png"
+    },
+
+    {
+      "id": "S025",
+      "title": "S025_EmergingUrinol",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.9234,
+      "longitude": 4.4699,
+      "date": "2023-04-29",
+      "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
+      "tags": ["urban", "rotterdam", "street art", "architecture"],
+      "modelPath": "models/S025_EmergingUrinol.glb",
+      "thumbnail": "images/S025_EmergingUrinol.png"
+    },
+
+    {
+      "id": "S026",
+      "title": "S026_BikeRack",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.9233,
+      "longitude": 4.4698,
+      "date": "2023-05-04",
+      "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
+      "tags": ["urban", "rotterdam", "street art", "architecture"],
+      "modelPath": "models/S026_BikeRack.glb",
+      "thumbnail": "images/S026_BikeRack.png"
     }
+
   ],
   "aggregates": [
     {
