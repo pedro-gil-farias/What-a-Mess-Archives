@@ -10,6 +10,12 @@
     --font-display: sans-serif;
     --font-body: sans-serif;
     --font-mono: sans-serif;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
     
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -59,32 +65,31 @@ body {
 
 .site-header .container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    padding-top: var(--spacing-md);
-    padding-bottom: var(--spacing-md);
-    gap: var(--spacing-md);
+    padding-top: var(--spacing-xs);
+    padding-left: var(--spacing-xs);
+    padding-bottom: var(--spacing-xs);
+    gap: var(--spacing-xs);
 }
 
 .site-title {
     font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 900;
-    letter-spacing: -0.02em;
+    font-size: var(--font-size-sm);
+    max-width: 33vw;
 }
 
 .main-nav {
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-xs);
 }
 
 .nav-link {
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     text-decoration: none;
     color: var(--color-text-light);
-    letter-spacing: 0.05em;
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius);
     transition: all var(--transition);

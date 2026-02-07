@@ -1,6 +1,32 @@
 {
   "specimens": [
     {
+      "id": "S006",
+      "title": "S006_CraneShovel",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.916994,
+      "longitude": 4.482448,
+      "date": "2023-04-03",
+      "description": "Placed in an outdoor courtyard of Rotterdam’s Maritime Museum, this black crane shovel’s large scale feels inviting, and climbable. However it clearly indicates with a small white tile that it should not be climbed.",
+      "tags": ["industrial", "rotterdam", "skateboarding"],
+      "modelPath": "models/S006_CraneShovel.gltf",
+      "thumbnail": "images/S006_CraneShovel.png"
+    },
+
+    {
+      "id": "S007",
+      "title": "S007_PigEars",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.917585,
+      "longitude": 4.481677,
+      "date": "2023-04-03",
+      "description": "Placed on the stairs of [Rotterdam’s Maritime Museum](https://maritiemmuseum.nl/en), the pig ears (aka skate stoppers), small metallic plates preventing skaters from grinding on the edge of these stairs are a sign of defensive urbanism. Paired with the [mosquito device](https://en.wikipedia.org/wiki/The_Mosquito#:~:text=The%20Mosquito%20or%20Mosquito%20alarm,human%20rights%20and%20discrimination%20concerns.) placed above it, they aim to prevent skating, loitering, in a fairly abrasive manner. On the other hand, could it be said these interventions were meant to keep the museum from accelerated deterioration and therefore increase its presentability and hospitality towards visitors (patrons) of the cultural venue?",
+      "tags": ["industrial", "rotterdam", "skateboarding"],
+      "modelPath": "models/S007_PigEars.glb",
+      "thumbnail": "images/S007_PigEars.png"
+    },
+    
+    {
       "id": "S022",
       "title": "S022_MaritimeSnail",
       "location": "Rotterdam, The Netherlands",
@@ -64,18 +90,4 @@
       "modelPath": "models/S026_BikeRack.glb",
       "thumbnail": "images/S026_BikeRack.png"
     }
-
-  ],
-  "aggregates": [
-    {
-      "id": "agg001",
-      "title": "Urban Textures",
-      "description": "A collection exploring the material language of European cities through weathered surfaces and accumulated marks.",
-      "tags": ["thematic", "texture", "urban"],
-      "thumbnail": "images/placeholder-aggregate-1.jpg",
-      "specimenIds": ["S022"],
-      "curatedBy": "Archive Team",
-      "dateCreated": "2024-07-01"
-    }
-  ]
 }
