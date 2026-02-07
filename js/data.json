@@ -297,13 +297,13 @@
   ],
   "aggregates": [
     {
-      "id": "agg001",
-      "title": "Urban Textures",
-      "description": "A collection exploring the material language of European cities through weathered surfaces and accumulated marks.",
-      "tags": ["thematic", "texture", "urban"],
+      "id": "A001",
+      "title": "The Working City",
+      "description": "...",
+      "tags": ["work", "labour", "urban"],
       "thumbnail": "images/placeholder-aggregate-1.jpg",
       "specimenIds": ["S022"],
-      "curatedBy": "Archive Team",
+      "curatedBy": "What A Mess",
       "dateCreated": "2024-07-01"
     }
   ]
