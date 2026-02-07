@@ -1,6 +1,76 @@
 {
   "specimens": [
     {
+      "id": "S001",
+      "title": "S001_Graffiti",
+      "location": "Gothenburg, Sweden",
+      "latitude": 57.7089,
+      "longitude": 11.9746,
+      "date": "2023-03-26",
+      "description": "The object, captured in Gothenburg Sweden, was chosen for its bold eye-shaped graffiti, juxtaposing the creative effort of creating the art work with the maintenance work the box it was painted on represents.",
+      "tags": ["industrial", "rotterdam", "skateboarding"],
+      "modelPath": "models/S001_Graffiti.glb",
+      "thumbnail": "images/S001_Graffiti.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S002",
+      "title": "S002_ChurchRenovation",
+      "location": "Gothenburg, Sweden",
+      "latitude": 57.7089,
+      "longitude": 11.9746,
+      "date": "2023-03-26",
+      "description": "The scene, depicting the entrance of a church in Gothenburg Sweden under maintenance, was chosen for its striking variety of textures, and the monumental scale of the effort, set as a very specific moment in time since this work is not done on a monthly or even yearly basis, but instead in much longer increments.",
+      "tags": ["industrial", "rotterdam", "skateboarding"],
+      "modelPath": "models/S002_ChurchRenovation.glb",
+      "thumbnail": "images/S002_ChurchRenovation.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S003",
+      "title": "S003_Burrito",
+      "location": "Gothenburg, Sweden",
+      "latitude": 57.7102,
+      "longitude": 11.9907,
+      "date": "2023-03-26",
+      "description": "The burrito was captured at TomToms in Gothenburg, Sweden, and was captured to represent the laborious space of fast-food-adjacent restaurants that use industrial-like setups at artisinal scales, using small assembly lines and highly curated branded elements in their approach to culinary service provision.",
+      "tags": ["industrial", "rotterdam", "skateboarding"],
+      "modelPath": "models/S003_Burrito.glb",
+      "thumbnail": "images/S003_Burrito.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S004",
+      "title": "S004_RepairedBench",
+      "location": "Gothenburg, Sweden",
+      "latitude": 57.7102,
+      "longitude": 11.9907,
+      "date": "2023-03-26",
+      "description": "This scene, depicting a participant sitting on a public bench in Gothenburg Sweden, aims to call attention to the difference in woods used to repair this bench. The backrest is made of a lighter wood, presumably used to repair the bench fairly recently.",
+      "tags": ["industrial", "rotterdam", "skateboarding"],
+      "modelPath": "models/S004_RepairedBench.glb",
+      "thumbnail": "images/S004_RepairedBench.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S005",
+      "title": "S005_IndoorPlants",
+      "location": "Gothenburg, Sweden",
+      "latitude": 57.7102,
+      "longitude": 11.9907,
+      "date": "2023-03-26",
+      "description": "The plants and hose captured, were found in the entrance of a building, conveying a recurring form of work, and a welcoming presence implying care and wellness underlined by the plants’ own lushness.",
+      "tags": ["industrial", "rotterdam", "skateboarding"],
+      "modelPath": "models/S005_IndoorPlants.glb",
+      "thumbnail": "images/S005_IndoorPlants.png",
+      "gifPath": ""
+    },
+    
+    {
       "id": "S006",
       "title": "S006_CraneShovel",
       "location": "Rotterdam, The Netherlands",
@@ -9,8 +79,9 @@
       "date": "2023-04-03",
       "description": "Placed in an outdoor courtyard of Rotterdam’s Maritime Museum, this black crane shovel’s large scale feels inviting, and climbable. However it clearly indicates with a small white tile that it should not be climbed.",
       "tags": ["industrial", "rotterdam", "skateboarding"],
-      "modelPath": "models/S006_CraneShovel.gltf",
-      "thumbnail": "images/S006_CraneShovel.png"
+      "modelPath": "models/S006_CraneShovel.glb",
+      "thumbnail": "images/S006_CraneShovel.png",
+      "gifPath": ""
     },
 
     {
@@ -23,9 +94,136 @@
       "description": "Placed on the stairs of [Rotterdam’s Maritime Museum](https://maritiemmuseum.nl/en), the pig ears (aka skate stoppers), small metallic plates preventing skaters from grinding on the edge of these stairs are a sign of defensive urbanism. Paired with the [mosquito device](https://en.wikipedia.org/wiki/The_Mosquito#:~:text=The%20Mosquito%20or%20Mosquito%20alarm,human%20rights%20and%20discrimination%20concerns.) placed above it, they aim to prevent skating, loitering, in a fairly abrasive manner. On the other hand, could it be said these interventions were meant to keep the museum from accelerated deterioration and therefore increase its presentability and hospitality towards visitors (patrons) of the cultural venue?",
       "tags": ["industrial", "rotterdam", "skateboarding"],
       "modelPath": "models/S007_PigEars.glb",
-      "thumbnail": "images/S007_PigEars.png"
+      "thumbnail": "images/S007_PigEars.png",
+      "gifPath": ""
     },
     
+    {
+      "id": "S008",
+      "title": "S008_TrashedBench",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.917425,
+      "longitude": 4.483199,
+      "date": "2023-04-03",
+      "description": "Found in Plein 1940, named after the bombing of Rotterdam that reduced much of the city to ashes, the bench is welcoming, available. It has a used paper tissue stuck in it, a pack of juice and a beer bottle by its side, evidence of recent use, not yet erased. It was the first capture of a seemingly hospitable public installation. On approaching the bench to make the 3D scan, a couple, enjoying the view, felt uncomfortable and decided to leave the bench.",
+      "tags": ["furniture", "rotterdam", "trash"],
+      "modelPath": "models/S008_TrashedBench.glb",
+      "thumbnail": "images/S008_TrashedBench.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S009",
+      "title": "S009_WaterFountain",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.917152,
+      "longitude": 4.483822,
+      "date": "2023-04-03",
+      "description": "The public water fountain, found near Plein 1940 which was named after the beginning of World War II when the bombing of Rotterdam reduced much of the city to ashes, is a welcome amenity. Simple, durable, the capture, in which the faucet was only represented in the texture, not the 3D mesh, is reminiscent of the monolith at the beginning of 2001 Space Odyssey.",
+      "tags": ["furniture", "rotterdam"],
+      "modelPath": "models/S009_WaterFountain.glb",
+      "thumbnail": "images/S009_WaterFountain.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S010",
+      "title": "S010_SpinningChairs",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.917018,
+      "longitude": 4.483693,
+      "date": "2023-04-03",
+      "description": "The collection of swivel chairs mounted to the ground found near Plein 1940 raised interesting questions: does the use of these chairs instead of benches allow for a more hospitable setting or a less hospitable one? Was the degree of freedom allowed by the swiveling of the seats reduce the potential for chance encounters or did it allow for greater control over one’s interactions?",
+      "tags": ["furniture", "rotterdam"],
+      "modelPath": "models/S010_SpinningChairs.glb",
+      "thumbnail": "images/S010_SpinningChairs.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S011",
+      "title": "S011_DefectiveRail",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.916686,
+      "longitude": 4.483032,
+      "date": "2023-04-03",
+      "description": "Found on the railing of the Kraneschipbrug, a floating bridge crossing the Leuvehaven, the undated red defective sticker caught the group’s attention. Paired with the spikes intended to dissuade adventurous souls to scale the metal gate to the left of the railing, the whole setup felt nicely defensive, bordering on ominous.",
+      "tags": ["furniture", "rotterdam"],
+      "modelPath": "models/S011_DefectiveRail.glb",
+      "thumbnail": "images/S011_DefectiveRail.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S012",
+      "title": "S012_ArtificialGrass",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.920542,
+      "longitude": 4.474104,
+      "date": "2023-04-15",
+      "description": "Located in the centre of Rotterdam, Schouwburgplein is surrounded by both commercial and cultural locations. On one side of the square is a concert hall, and on the other is the Rotterdam Theatre. To the west of the square is a cinema, while a series of restaurants and the entrance to a busy shopping street lie to the east. While the square is seen by some as a good example of porosity, not everyone agrees with this statement. Some find it to be a space for everyone and everything, while others question its purpose.",
+      "tags": ["furniture", "rotterdam"],
+      "modelPath": "models/S012_ArtificialGrass.glb",
+      "thumbnail": "images/S012_ArtificialGrass.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S013",
+      "title": "S013_Facades",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.920462,
+      "longitude": 4.468850,
+      "date": "2023-04-15",
+      "description": "According to the street’s website “West Kruiskade has a cheerful us-versus-them street culture; much of daily life takes place outside”. This vibrancy and contrasts between cultures and activities is very present in the businesses facades. To capture this, the group scanned a sequence of 3 facades: KFC, an American fast food chain, Primera, a Dutch convenience store chain and Qiu Xue Cheng Praktijk, a chinese medecine and acupuncture centre.",
+      "tags": ["furniture", "rotterdam"],
+      "modelPath": "models/S013_Facades.glb",
+      "thumbnail": "images/S013_Facades.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S014",
+      "title": "S014_SidewalkBlock",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.920666,
+      "longitude": 4.468688,
+      "date": "2023-04-15",
+      "description": "The construction site was absorbing a private bicycle shed, however, a small area was opened so owners of the bicycles people could access it and take out their bicycles, in that small opening a toolbelt was also found, possibly belonging to one of the workers taking a break on the other side of the road",
+      "tags": ["furniture", "rotterdam"],
+      "modelPath": "models/S014_SidewalkBlock.glb",
+      "thumbnail": "images/S014_SidewalkBlock.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S015",
+      "title": "S015_Barriers",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.916822,
+      "longitude": 4.469593,
+      "date": "2023-04-15",
+      "description": "A green wall with some construction barricades tucked in against the corner, almost as if they were retired from their duties. An a exampl of nature taking over the city.",
+      "tags": ["furniture", "rotterdam"],
+      "modelPath": "models/S015_Barriers.glb",
+      "thumbnail": "images/S015_Barriers.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S016",
+      "title": "S016_Statue",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.916526,
+      "longitude": 4.473565,
+      "date": "2023-04-15",
+      "description": " ‘Anita’ is the first public sculpture by Curaçao-born artist David Bade, representing, in the words of the artist, “Rotterdam’s constant urban developments and building projects”.",
+      "tags": ["furniture", "rotterdam"],
+      "modelPath": "models/S016_Statue.glb",
+      "thumbnail": "images/S016_Statue.png",
+      "gifPath": ""
+    },
+
     {
       "id": "S022",
       "title": "S022_MaritimeSnail",
@@ -36,7 +234,8 @@
       "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
       "tags": ["urban", "berlin", "street art", "architecture"],
       "modelPath": "models/S022_MaritimeSnail.glb",
-      "thumbnail": "images/S022_MaritimeSnail.png"
+      "thumbnail": "images/S022_MaritimeSnail.png",
+      "gifPath": "images/S022_MaritimeSnail.gif"
     },
 
     {
@@ -49,7 +248,8 @@
       "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
       "tags": ["urban", "rotterdam", "street art", "architecture"],
       "modelPath": "models/S023_RustyEntrance.glb",
-      "thumbnail": "images/S023_RustyEntrance.png"
+      "thumbnail": "images/S023_RustyEntrance.png",
+      "gifPath": ""
     },
 
     {
@@ -62,7 +262,8 @@
       "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
       "tags": ["urban", "rotterdam", "street art", "architecture"],
       "modelPath": "models/S024_ClearSign.glb",
-      "thumbnail": "images/S024_ClearSign.png"
+      "thumbnail": "images/S024_ClearSign.png",
+      "gifPath": ""
     },
 
     {
@@ -75,7 +276,8 @@
       "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
       "tags": ["urban", "rotterdam", "street art", "architecture"],
       "modelPath": "models/S025_EmergingUrinol.glb",
-      "thumbnail": "images/S025_EmergingUrinol.png"
+      "thumbnail": "images/S025_EmergingUrinol.png",
+      "gifPath": ""
     },
 
     {
@@ -88,6 +290,21 @@
       "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
       "tags": ["urban", "rotterdam", "street art", "architecture"],
       "modelPath": "models/S026_BikeRack.glb",
-      "thumbnail": "images/S026_BikeRack.png"
+      "thumbnail": "images/S026_BikeRack.png",
+      "gifPath": ""
     }
+
+  ],
+  "aggregates": [
+    {
+      "id": "agg001",
+      "title": "Urban Textures",
+      "description": "A collection exploring the material language of European cities through weathered surfaces and accumulated marks.",
+      "tags": ["thematic", "texture", "urban"],
+      "thumbnail": "images/placeholder-aggregate-1.jpg",
+      "specimenIds": ["S022"],
+      "curatedBy": "Archive Team",
+      "dateCreated": "2024-07-01"
+    }
+  ]
 }

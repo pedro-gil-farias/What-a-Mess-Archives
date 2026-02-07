@@ -50,13 +50,27 @@ function init() {
 function renderSpecimens(specimensList = specimens) {
     specimensGrid.innerHTML = specimensList.map(specimen => `
         <div class="card" data-type="specimen" data-id="${specimen.id}">
-            <img src="${basePath}${specimen.thumbnail}" alt="${specimen.title}" class="card-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22280%22%3E%3Crect fill=%22%23f5f2ed%22 width=%22400%22 height=%22280%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22monospace%22 font-size=%2216%22 fill=%22%236b6560%22%3E3D Model Placeholder%3C/text%3E%3C/svg%3E'">
+            <img src="${basePath}${specimen.thumbnail}" ${specimen.gifPath ? `data-gif="${basePath}${specimen.gifPath}"` : ''} alt="${specimen.title}" class="card-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22280%22%3E%3Crect fill=%22%23f5f2ed%22 width=%22400%22 height=%22280%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22monospace%22 font-size=%2216%22 fill=%22%236b6560%22%3E3D Model Placeholder%3C/text%3E%3C/svg%3E'">
         </div>
     `).join('');
 
     if (specimensList.length === 0) {
         specimensGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: var(--spacing-lg); color: var(--color-text-light);">No specimens available.</p>';
     }
+
+    // Add hover listeners for image/gif swap
+    specimensGrid.querySelectorAll('.card-image').forEach(img => {
+        const gifPath = img.getAttribute('data-gif');
+        const originalSrc = img.src;
+        
+        img.addEventListener('mouseenter', () => {
+            if (gifPath) img.src = gifPath;
+        });
+        
+        img.addEventListener('mouseleave', () => {
+            img.src = originalSrc;
+        });
+    });
 }
 
 // Render aggregate cards
@@ -240,7 +254,8 @@ function openSpecimenModal(id) {
                 alt="${specimen.title}"
                 camera-controls
                 auto-rotate
-                shadow-intensity="1"
+                shadow-intensity="0"
+                camera-orbit="-45deg 55deg 15m"
                 loading="eager">
             </model-viewer>
         </div>
@@ -262,8 +277,12 @@ function openSpecimenModal(id) {
                     <div class="meta-value">${formatDate(specimen.date)}</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Coordinates</div>
-                    <div class="meta-value">${specimen.coordinates}</div>
+                    <div class="meta-label">Latitude</div>
+                    <div class="meta-value">${specimen.latitude}</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Longitude</div>
+                    <div class="meta-value">${specimen.longitude}</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">Specimen ID</div>
