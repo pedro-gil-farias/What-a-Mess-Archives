@@ -375,51 +375,58 @@ function formatDate(dateString) {
     });
 }
 
-// Setup specimen submission form
+// Setup specimen submission form (Formspree Integration)
 function setupSubmissionForm() {
     const form = document.getElementById('specimen-form');
     const messageDiv = document.getElementById('form-message');
     
     if (!form) return;
 
+    // Check if Formspree form ID is configured
+    const formAction = form.getAttribute('action');
+    if (formAction.includes('YOUR_FORM_ID')) {
+        messageDiv.textContent = '⚠ Form not configured yet. See SUBMISSION_SETUP.md';
+        messageDiv.classList.add('show', 'error');
+        form.querySelector('.btn-submit').disabled = true;
+        return;
+    }
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Get form data
-        const formData = {
-            title: document.getElementById('title').value,
-            location: document.getElementById('location').value,
-            latitude: document.getElementById('latitude').value,
-            longitude: document.getElementById('longitude').value,
-            date: document.getElementById('date').value,
-            description: document.getElementById('description').value,
-            tags: document.getElementById('tags').value ? document.getElementById('tags').value.split(',').map(t => t.trim()) : [],
-            submitterName: document.getElementById('submitter-name').value
-        };
-
-        // Show loading state
         const submitBtn = form.querySelector('.btn-submit');
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Submitting...';
         submitBtn.disabled = true;
 
         try {
-            // Create GitHub issue
-            await submitToGitHub(formData);
+            // Use Formspree's AJAX submission
+            const formData = new FormData(form);
             
-            // Show success message
-            messageDiv.textContent = '✓ Thank you! Your submission has been received and will be reviewed by our team.';
-            messageDiv.classList.add('show', 'success');
-            messageDiv.classList.remove('error');
-            
-            // Reset form
-            form.reset();
-            
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                messageDiv.classList.remove('show');
-            }, 5000);
+            const response = await fetch(formAction, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
 
+            if (response.ok) {
+                // Show success message
+                messageDiv.innerHTML = '✓ <strong>Thank you!</strong> Your submission has been received. We\'ll review it and add it to the archive soon.';
+                messageDiv.classList.add('show', 'success');
+                messageDiv.classList.remove('error');
+                
+                // Reset form
+                form.reset();
+                
+                // Keep message visible longer for file uploads
+                setTimeout(() => {
+                    messageDiv.classList.remove('show');
+                }, 8000);
+            } else {
+                throw new Error('Form submission failed');
+            }
         } catch (error) {
             console.error('Submission error:', error);
             messageDiv.textContent = '✗ Error submitting specimen. Please try again or contact us directly.';
@@ -430,65 +437,6 @@ function setupSubmissionForm() {
             submitBtn.disabled = false;
         }
     });
-}
-
-// Submit specimen as GitHub issue
-async function submitToGitHub(formData) {
-    // GitHub configuration (you'll need to set these)
-    const GITHUB_TOKEN = localStorage.getItem('github_token');
-    const GITHUB_REPO = 'pedro-gil-farias/What-a-Mess-Archives'; // Replace with actual repo
-    const GITHUB_OWNER = 'pedro-gil-farias'; // Replace with actual owner
-    
-    if (!GITHUB_TOKEN) {
-        throw new Error('GitHub token not configured. Please set it up in browser console.');
-    }
-
-    // Create issue body
-    const issueBody = `
-## New Specimen Submission
-
-**Submitted by:** ${formData.submitterName}  
-
-### Details
-- **Title:** ${formData.title}
-- **Location:** ${formData.location}
-- **Date:** ${formData.date}
-- **Latitude:** ${formData.latitude}
-- **Longitude:** ${formData.longitude}
-
-### Description
-${formData.description}
-
-### Tags
-${formData.tags.length > 0 ? formData.tags.join(', ') : 'None'}
-
----
-*This issue was auto-generated from the website submission form.*
-`;
-
-    // Create issue via GitHub API
-    const response = await fetch(
-        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO.split('/')[1]}/issues`,
-        {
-            method: 'POST',
-            headers: {
-                'Authorization': `token ${GITHUB_TOKEN}`,
-                'Accept': 'application/vnd.github.v3+json'
-            },
-            body: JSON.stringify({
-                title: `Specimen Submission: ${formData.title}`,
-                body: issueBody,
-                labels: ['submission', 'pending-review']
-            })
-        }
-    );
-
-    if (!response.ok) {
-        const error = await response.json();
-        throw new Error(`GitHub API error: ${error.message || 'Unknown error'}`);
-    }
-
-    return await response.json();
 }
 
 // Load data and initialize when DOM is loaded

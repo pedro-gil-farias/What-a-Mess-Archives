@@ -67,9 +67,9 @@
             <div class="container">
                 <div class="submit-content">
                     <h2 class="section-title">Submit a Specimen</h2>
-                    <p class="section-description">Found an interesting urban detail? Share it with our community by submitting a specimen.</p>
+                    <p class="section-description">Do you want to submit a specimen? Please fill out the form below.</p>
                     
-                    <form id="specimen-form" class="specimen-form">
+                    <form id="specimen-form" class="specimen-form" action="https://formspree.io/f/mpqjqbzq" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="title">Title *</label>
                             <input type="text" id="title" name="title" required placeholder="e.g., S012_BrokenTile">
@@ -112,9 +112,33 @@
                             <input type="text" id="submitter-name" name="submitter-name" required placeholder="Your name">
                         </div>
 
+                        <div class="form-group">
+                            <label for="submitter-email">Your Email *</label>
+                            <input type="email" id="submitter-email" name="email" required placeholder="your@email.com">
+                        </div>
+
+                        <!-- File Uploads -->
+                        <div class="form-divider">
+                            <h3>3D Model</h3>
+                            <p>Upload your 3D model in .glb or .gltf format</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="model-file">3D Model (GLB format)</label>
+                            <input type="file" id="model-file" name="model_glb" accept=".glb,.gltf">
+                            <small>Max 100MB. Supported: GLB, GLTF</small>
+                        </div>
+                        </div>
+
                         <button type="submit" class="btn-submit">Submit Specimen</button>
                         <div id="form-message" class="form-message"></div>
                     </form>
+
+                    <div class="setup-required" style="display: none;">
+                        <p style="color: var(--color-text-light); font-size: var(--font-size-sm); margin-top: var(--spacing-lg);">
+                            <em>Note: Form submissions are not yet configured. Administrators: Follow the SUBMISSION_SETUP.md guide to enable submissions.</em>
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>

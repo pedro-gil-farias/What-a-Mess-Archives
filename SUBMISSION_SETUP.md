@@ -1,147 +1,214 @@
 # Specimen Submission Setup Guide
 
-This guide explains how to set up the GitHub Issues integration for specimen submissions.
+This guide explains how to set up specimen submissions on your website using **Formspree**, a free form backend service that sends you emails with submission data.
 
 ## Overview
 
-Visitors can now submit new specimens through the "Submit" page on your website. Submissions are created as GitHub Issues in your repository, allowing you to:
-- Review submissions before adding them to data.json
-- Track contributions
-- Communicate with submitters via GitHub
+Visitors can submit new specimens through the "Submit" page with the following capabilities:
+- Fill out detailed specimen information
+- Upload a 3D model (GLB format)
+- Upload a thumbnail image (PNG/JPG)
+- Upload an animated GIF (optional)
+- **You receive an email** with all the information and file links
 
-## Setup Instructions
+## Quick Setup (2 Steps)
 
-### Step 1: Create a GitHub Personal Access Token
+### Step 1: Create a Formspree Account
 
-1. Go to [GitHub Settings → Developer settings → Personal access tokens](https://github.com/settings/tokens)
-2. Click "Generate new token"
-3. Give it a name like "Website Specimen Submissions"
-4. Select **only** these scopes:
-   - `repo` (Full control of private repositories)
-5. Click "Generate token"
-6. **Copy the token immediately** (you won't see it again)
+1. Go to [formspree.io](https://formspree.io/)
+2. Click "Sign Up" and create a free account
+3. Verify your email address
 
-### Step 2: Configure Your Repository URL
+### Step 2: Create a Form & Get Your Form ID
 
-Edit `js/app.js` and find the `submitToGitHub()` function. Replace:
-```javascript
-const GITHUB_REPO = 'your-username/your-repo'; // Replace with actual repo
-const GITHUB_OWNER = 'your-username'; // Replace with actual owner
+1. In Formspree, click "New Form"
+2. Name it something like "Specimen Submissions"
+3. Add your email address where you want to receive submissions
+4. Copy the **Form ID** (you'll see it in the form settings, looks like: `mlepqnxd`)
+5. Open `index.html` in your editor
+6. Find this line (around line 73):
+```html
+<form id="specimen-form" class="specimen-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data">
+```
+7. Replace `YOUR_FORM_ID` with your actual Form ID:
+```html
+<form id="specimen-form" class="specimen-form" action="https://formspree.io/f/mlepqnxd" method="POST" enctype="multipart/form-data">
 ```
 
-With your actual GitHub details:
-```javascript
-const GITHUB_REPO = 'your-username/What-a-Mess-Archives';
-const GITHUB_OWNER = 'your-username';
-```
+**That's it!** Your submission form is now live.
 
-### Step 3: Store the GitHub Token
+## How It Works
 
-**Option A: Local Setup (for development)**
-1. Open your website in a browser
-2. Open Developer Console (F12)
-3. Run this command:
-```javascript
-localStorage.setItem('github_token', 'YOUR_TOKEN_HERE')
-```
-Replace `YOUR_TOKEN_HERE` with your actual token from Step 1.
+1. **Visitor submits the form** with specimen data and files
+2. **Formspree receives the submission** and processes the files
+3. **You get an email** with:
+   - All form field values
+   - Download links to uploaded files (3D model, images)
+   - Visitor's email address
+4. **You review and approve:**
+   - Download the files
+   - Add files to your GitHub repo (`models/`, `images/`)
+   - Add entry to `js/data.json`
+   - Optionally reply to the submission via Formspree
 
-**Option B: Environment Variable (for production)**
-If you're using a build process or CI/CD, you can store the token as an environment variable and inject it into the app.
+## Form Fields
 
-### Step 4: Test the Form
+The submission form collects:
 
-1. Navigate to the "Submit" page on your website
-2. Fill in the form with test data
-3. Click "Submit Specimen"
-4. Check your GitHub repository's Issues tab - a new issue should appear with label `submission` and `pending-review`
+**Required fields:**
+- **Title**: Specimen ID/name (e.g., S012_BrokenTile)
+- **Location**: City and country
+- **Date**: When captured
+- **Latitude/Longitude**: GPS coordinates
+- **Description**: What makes this specimen interesting
+- **Your Name**: For credit/contact
+- **Your Email**: To contact you
+- **Thumbnail Image**: PNG or JPG preview image
 
-## Workflow for Reviewing Submissions
-
-When a specimen is submitted:
-
-1. **A GitHub Issue is created** with all the submission details
-2. **Review the submission** in your Issues tab
-3. **If approved:**
-   - Extract the specimen data from the issue
-   - Add a new entry to `js/data.json` with the specimen details
-   - Close the issue with a comment thanking them
-   - Optionally, add their 3D model to the `models/` folder and thumbnail to `images/`
-
-4. **If rejected:**
-   - Close the issue with a comment explaining why
-   - Suggest improvements if appropriate
-
-## Form Fields Explained
-
-- **Title**: Unique identifier (e.g., S012_BrokenTile)
-- **Location**: City and country where specimen was found
-- **Date**: When the specimen was captured
-- **Latitude/Longitude**: GPS coordinates of the location
-- **Description**: Detailed explanation of what makes this specimen interesting
-- **Tags**: Categorization (e.g., industrial, furniture, graffiti)
-- **Your Name**: Submitter's name for credit
-- **Your Email**: Contact information (not publicly visible)
+**Optional fields:**
+- **Tags**: Categorization keywords
+- **3D Model**: GLB or GLTF format
+- **Animated GIF**: Plays on hover
 
 ## Data.json Entry Format
 
-When you approve a submission, add it to `js/data.json` following this format:
+When you approve a submission, add it to `js/data.json`:
 
 ```json
 {
     "id": "S012",
-    "title": "S012_YourTitle",
-    "location": "City, Country",
-    "latitude": 51.917585,
-    "longitude": 4.481677,
+    "title": "S012_BrokenTile",
+    "location": "Amsterdam, The Netherlands",
+    "latitude": 52.3702,
+    "longitude": 4.8952,
     "date": "2024-02-11",
-    "description": "Your description here...",
-    "tags": ["tag1", "tag2", "tag3"],
-    "modelPath": "models/S012_YourTitle.glb",
-    "thumbnail": "images/S012_YourTitle.png",
-    "gifPath": "images/S012_YourTitle.gif"
+    "description": "Description of the specimen...",
+    "tags": ["industrial", "materials"],
+    "modelPath": "models/S012_BrokenTile.glb",
+    "thumbnail": "images/S012_BrokenTile.png",
+    "gifPath": "images/S012_BrokenTile.gif"
 }
 ```
 
-Note: `gifPath` is optional and can be an empty string.
+Note: `gifPath` is optional and can be an empty string `""` if no GIF.
 
-## Security Notes
+## Formspree Features
 
-- **Never commit your GitHub token to the repository**
-- The token is only stored locally in the browser's localStorage
-- Consider using a token with limited permissions and short expiration
-- If you accidentally expose your token, delete it immediately and create a new one
+### Email Notifications
+- You automatically receive an email for each submission
+- Email includes all form data and file download links
+- Files are stored temporarily on Formspree servers
+
+### File Handling
+- Files are uploaded with the form submission
+- Download links are valid for 7 days
+- Max total submission size varies by plan (free tier is generous)
+
+### Dashboard
+- View all submissions in your Formspree dashboard
+- Reply to submissions (if you have a premium plan)
+- Export submission data
+- Spam filtering available
+
+### SPAM & Moderation
+- Formspree has built-in spam protection
+- You can block specific emails/domains
+- Mark submissions as spam directly from emails
+
+## Managing Submissions Workflow
+
+### 1. Review Incoming Email
+When you receive a submission email:
+- Review the specimen details
+- Download the files
+- Assess quality/appropriateness
+
+### 2. Approve Submissions
+If approved:
+- Clone/pull your GitHub repo
+- Create a new specimen ID (e.g., S012)
+- Move the files to appropriate folders:
+  - `models/` for the GLB file
+  - `images/` for PNG/JPG and GIF files
+- Rename files: `S012_[title].ext`
+- Add entry to `js/data.json`
+- Commit and push to GitHub
+
+### 3. Reject Submissions
+If not appropriate:
+- Optionally reply with feedback (premium feature)
+- Simply don't add it to data.json
+- Archive/delete the email
+
+## File Size Recommendations
+
+- **GLB models**: Keep under 100MB (smaller = faster load)
+- **Thumbnail images**: ~400x280px, 1-5MB
+- **GIF animations**: Keep under 20MB for web performance
+
+## Security & Privacy
+
+✓ **Forms are secure:**
+- Formspree uses HTTPS
+- Your email is not exposed to visitors
+- Files don't stay on Formspree permanently
+
+✓ **No backend token exposed** (unlike the previous GitHub approach)
+
+✓ **Visitor data:**
+- Their email is collected but only used for replies
+- Consider GDPR compliance if you have EU visitors
+- You can export submissions
 
 ## Troubleshooting
 
-### Form submission fails with "Token not configured"
-- Make sure you've set the token in localStorage (see Step 3)
-- Check the browser console for error messages
+### "Form not configured" error when visiting site
+- Double-check you've replaced `YOUR_FORM_ID` with your actual ID
+- Make sure the form action URL is correct
 
-### Issue not appearing in GitHub
-- Check that your `GITHUB_OWNER` and `GITHUB_REPO` are correct in `app.js`
-- Verify the token has `repo` scope permissions
-- Check GitHub's API rate limits (60 requests/hour for authenticated requests)
+### Files not coming through in email
+- Check Formspree file size limits
+- Try smaller files first to test
+- Verify the file types are allowed
 
-### "API error: Not Found"
-- Double-check the repository name spelling
-- Ensure the repository exists and is accessible with your token
+### Not receiving emails
+- Check spam/junk folder
+- Verify email in Formspree settings
+- Test with Formspree's test submission feature
 
-## Testing Without a Real Repository
+### Want to move to a custom backend later?
+- Export all submissions from Formspree
+- Replace the form action URL with your backend endpoint
+- Formspree can auto-forward to webhooks (premium)
 
-For testing purposes, you can temporarily modify the form to display the JSON as a text area instead of submitting to GitHub:
+## Advanced: Formspree Settings
 
-```javascript
-// In form submit handler
-const specimenJSON = JSON.stringify(formData, null, 2);
-console.log('Specimen data:', specimenJSON);
-messageDiv.textContent = '✓ Copy the JSON below and add it to data.json manually\n' + specimenJSON;
-```
+In your Formspree dashboard, you can:
+- **Custom redirect**: Send users somewhere after submit (optional)
+- **Email templates**: Customize submission emails
+- **Auto-responder**: Send a thank you email to visitors
+- **Webhooks**: Forward submissions to another service
+- **CAPTCHA**: Add bot protection
 
-## Future Enhancements
+## Formspree Pricing
 
-- [ ] Auto-generate specimen IDs
-- [ ] Image upload support (requires backend)
-- [ ] Model file upload (requires backend)
-- [ ] Email notifications on submission
-- [ ] Webhook to auto-sync approved submissions to data.json
+The **free tier** is perfect for this use case:
+- Unlimited forms
+- 50 submissions/month
+- File uploads included
+- Email notifications
+
+Upgrade to premium if you get many submissions:
+- Unlimited submissions
+- Spam filtering dashboard
+- Reply directly to submissions
+- Export all data
+
+## Next Steps
+
+1. Sign up for Formspree (it's free!)
+2. Create your form and get the ID
+3. Update `YOUR_FORM_ID` in index.html
+4. Test by submitting a form
+5. Check your email!
+6. You're ready to collect specimens!
