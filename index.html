@@ -11,11 +11,10 @@
     <header class="site-header">
         <div class="container">
             <p class="site-title"><b>What A Mess Archives</b> is an ongoing collaborative archive, developed by Pedro Gil Farias and Hugo Pilate, exploring the untapped narrative potential of the urban fabric through a collection of 3D samples of the urban environment. </p>
-            <p class="site-title">Created by <a href="https://whatamess.city/">What A Mess</a></p>
+            <p class="site-title">Created by <a href="https://whatamess.city/">What A Mess</a>You can submit</p>
             <nav class="main-nav">
                 <a href="#specimens" class="nav-link active" data-section="specimens">Specimens</a>
                 <a href="#aggregates" class="nav-link" data-section="aggregates">Aggregates</a>
-                <a href="#submit" class="nav-link" data-section="submit">Submit</a>
                 <a href="#about" class="nav-link" data-section="about">About</a>
             </nav>
         </div>
@@ -56,34 +55,8 @@
                     <h2 class="section-title">Aggregates</h2>
                     <p class="section-description">Curated collages and thematic collections</p>
                 </div>
-                <div id="aggregates-grid" class="grid">
+                <div id="aggregates-grid" class="aggregate-grid">
                     <!-- Populated by JavaScript -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Submit Section -->
-        <section id="submit" class="section">
-            <div class="container">
-                <div class="submit-content">
-                    <h2 class="section-title">Submit a Specimen</h2>
-                    <p class="section-description">Found an interesting urban detail? Share it with our community by submitting a specimen.</p>
-                    
-                    <form
-                        action="https://formspree.io/f/mpqjqbzq"
-                        method="POST"
-                        >
-                        <label>
-                            Your email:
-                            <input type="email" name="email">
-                        </label>
-                        <label>
-                            Your message:
-                            <textarea name="message"></textarea>
-                        </label>
-                        <!-- your other form fields go here -->
-                        <button type="submit">Send</button>
-                    </form>
                 </div>
             </div>
         </section>
@@ -111,6 +84,6 @@
         </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>

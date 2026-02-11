@@ -1,0 +1,33 @@
+{
+  "aggregates": [
+    {
+      "id": "A001",
+      "title": "The Working City",
+      "description": "...",
+      "thumbnail": "images/A001_TheWorkingCity.png",
+      "specimenIds": ["S001", "S002", "S003", "S004", "S005"],
+      "curatedBy": "What A Mess",
+      "dateCreated": "2024-07-01"
+    },
+
+    {
+      "id": "A002",
+      "title": "The (In)hospitable City",
+      "description": "Hospitability, is the act of being friendly and welcoming to visitors or guests, a hospitable city could be said to apply such sensibilities to its public space. But does it? And who is welcoming who? From physical furniture, to signage or color indications, to technological devices, the public space is filled with more or less explicit nudges to convey whether you are welcome or not.",
+      "thumbnail": "images/A002_TheInhospitableCity.png",
+      "specimenIds": ["S006", "S007", "S008", "S009", "S010", "S011"],
+      "curatedBy": "w/ <a href=\"https://www.linkedin.com/in/floor-van-ditzhuyzen-73a9717?originalSubdomain=nl\">Floor van Ditzhuyzen</a> AKA  <a href=\"https://publicspacedetective.com/cms/\">The Public Space Detective</a>",
+      "dateCreated": "2023-04-03"
+    },
+
+    {
+      "id": "A003",
+      "title": "The Porous City",
+      "description": "Something is porous when it has several openings that allow easy passage (of liquid, air, things, people, information, etc.). A porous city could be imagined as one that encourages openness, exchange, interaction, and fluidity between different groups, cultural identities, and spaces. It’s a city that would value in-between spaces: leisure and work, affordable and less affordable housing, between public and private, prescriptive and open, formal and informal… It’s a city that is in a state of constant transformation, and is never fully closed off or rigidly defined.",
+      "thumbnail": "images/A003_ThePorousCity.png",
+      "specimenIds": ["S006", "S007", "S008", "S009", "S010", "S011"],
+      "curatedBy": "w/ <a href=\"https://motelmozaique.nl/archive/2023-2/\">MOMO Festival 2023</a>",
+      "dateCreated": "2023-04-03"
+    }
+  ]
+}
