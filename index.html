@@ -67,78 +67,69 @@
             <div class="container">
                 <div class="submit-content">
                     <h2 class="section-title">Submit a Specimen</h2>
-                    <p class="section-description">Do you want to submit a specimen? Please fill out the form below.</p>
+                    <p class="section-description">Found an interesting urban detail? Share it with our community by submitting a specimen.</p>
                     
-                    <form id="specimen-form" class="specimen-form" action="https://formspree.io/f/mpqjqbzq" method="POST" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="title">Title *</label>
-                            <input type="text" id="title" name="title" required placeholder="e.g., S012_BrokenTile">
-                        </div>
-
-                        <div class="form-row">
+                    <form
+                        id="specimen-form"
+                        class="specimen-form"
+                        action="https://formspree.io/f/mpqjqbzq"
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+                        <!-- Basic Info Section -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">Specimen Details</h3>
+                            
                             <div class="form-group">
-                                <label for="location">Location *</label>
-                                <input type="text" id="location" name="location" required placeholder="e.g., Rotterdam, The Netherlands">
+                                <label for="title" class="form-label">Title *</label>
+                                <input class="form-input" type="text" id="title" name="title" required placeholder="e.g., S012_BrokenTile">
                             </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="location" class="form-label">Location *</label>
+                                    <input class="form-input" type="text" id="location" name="location" required placeholder="e.g., Rotterdam, The Netherlands">
+                                </div>
+                                <div class="form-group">
+                                    <label for="date" class="form-label">Date Captured *</label>
+                                    <input class="form-input" type="date" id="date" name="date" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="latitude" class="form-label">Latitude *</label>
+                                    <input class="form-input" type="number" id="latitude" name="latitude" required step="0.00001" placeholder="51.917585">
+                                </div>
+                                <div class="form-group">
+                                    <label for="longitude" class="form-label">Longitude *</label>
+                                    <input class="form-input" type="number" id="longitude" name="longitude" required step="0.00001" placeholder="4.481677">
+                                </div>
+                            </div>
+
                             <div class="form-group">
-                                <label for="date">Date *</label>
-                                <input type="date" id="date" name="date" required>
+                                <label for="description" class="form-label">Description *</label>
+                                <textarea class="form-input form-textarea" id="description" name="description" required rows="6" placeholder="Describe what you found and why it's interesting..."></textarea>
                             </div>
-                        </div>
 
-                        <div class="form-row">
                             <div class="form-group">
-                                <label for="latitude">Latitude *</label>
-                                <input type="number" id="latitude" name="latitude" required step="0.00001" placeholder="51.917585">
+                                <label for="tags" class="form-label">Tags (comma-separated)</label>
+                                <input class="form-input" type="text" id="tags" name="tags" placeholder="e.g., industrial, furniture, graffiti, materials">
                             </div>
+
                             <div class="form-group">
-                                <label for="longitude">Longitude *</label>
-                                <input type="number" id="longitude" name="longitude" required step="0.00001" placeholder="4.481677">
+                                <label for="model-file" class="form-label">3D Model (GLB format) *</label>
+                                <input class="form-input form-file-input" type="file" id="model-file" name="model_glb" accept=".glb,.gltf" required>
+                                <small class="form-hint">Supported: GLB, GLTF - Max 100MB</small>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="description">Description *</label>
-                            <textarea id="description" name="description" required rows="6" placeholder="Describe what you found and why it's interesting..."></textarea>
+                        <!-- Submit Button -->
+                        <div class="form-actions">
+                            <button type="submit" class="btn-submit">Submit Specimen</button>
+                            <div id="form-message" class="form-message"></div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="tags">Tags</label>
-                            <input type="text" id="tags" name="tags" placeholder="e.g., industrial, furniture, graffiti (comma-separated)">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="submitter-name">Your Name *</label>
-                            <input type="text" id="submitter-name" name="submitter-name" required placeholder="Your name">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="submitter-email">Your Email *</label>
-                            <input type="email" id="submitter-email" name="email" required placeholder="your@email.com">
-                        </div>
-
-                        <!-- File Uploads -->
-                        <div class="form-divider">
-                            <h3>3D Model</h3>
-                            <p>Upload your 3D model in .glb or .gltf format</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="model-file">3D Model (GLB format)</label>
-                            <input type="file" id="model-file" name="model_glb" accept=".glb,.gltf">
-                            <small>Max 100MB. Supported: GLB, GLTF</small>
-                        </div>
-                        </div>
-
-                        <button type="submit" class="btn-submit">Submit Specimen</button>
-                        <div id="form-message" class="form-message"></div>
                     </form>
-
-                    <div class="setup-required" style="display: none;">
-                        <p style="color: var(--color-text-light); font-size: var(--font-size-sm); margin-top: var(--spacing-lg);">
-                            <em>Note: Form submissions are not yet configured. Administrators: Follow the SUBMISSION_SETUP.md guide to enable submissions.</em>
-                        </p>
-                    </div>
                 </div>
             </div>
         </section>

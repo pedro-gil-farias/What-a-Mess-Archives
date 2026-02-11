@@ -513,9 +513,10 @@ body {
     transform: translateX(4px);
 }
 
-/* Submit Form Styles */
+/* ===== FORM STYLES ===== */
+
 .submit-content {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
@@ -524,6 +525,33 @@ body {
     border: 1px solid var(--color-border);
     padding: var(--spacing-lg);
     margin-top: var(--spacing-lg);
+    border-radius: var(--radius);
+}
+
+.form-section {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.form-section-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-section-description {
+    color: var(--color-text-light);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-md);
+    margin-top: -0.5rem;
 }
 
 .form-group {
@@ -538,96 +566,97 @@ body {
     gap: var(--spacing-md);
 }
 
-.form-group label {
+.form-label {
     font-weight: 600;
     margin-bottom: var(--spacing-xs);
     font-size: var(--font-size-md);
     color: var(--color-text);
 }
 
-.form-group input,
-.form-group textarea {
+.form-input {
     padding: var(--spacing-sm);
     border: 1px solid var(--color-border);
     background: var(--color-bg);
     font-family: var(--font-body);
     font-size: var(--font-size-md);
     color: var(--color-text);
-    transition: border-color var(--transition);
-    resize: vertical;
+    transition: all var(--transition);
+    border-radius: 2px;
 }
 
-.form-group input[type="file"] {
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background: var(--color-surface);
+    box-shadow: 0 0 0 3px rgba(81, 79, 77, 0.1);
+}
+
+.form-input::placeholder {
+    color: var(--color-text-light);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: var(--font-body);
+}
+
+.form-file-input {
     padding: var(--spacing-xs);
     cursor: pointer;
+    height: 44px;
+    display: flex;
+    align-items: center;
 }
 
-.form-group input[type="file"]::file-selector-button {
+.form-file-input::file-selector-button {
     padding: var(--spacing-xs) var(--spacing-sm);
-    background: var(--color-accent);
+    background: var(--color-text);
     color: var(--color-surface);
-    border: none;
+    border: 2px solid var(--color-text);
     cursor: pointer;
     font-weight: 600;
-    transition: background var(--transition);
-    margin-right: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    transition: all var(--transition);
+    margin-right: var(--spacing-sm);
+    border-radius: 2px;
 }
 
-.form-group input[type="file"]::file-selector-button:hover {
-    background: var(--color-text);
+.form-file-input::file-selector-button:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
 }
 
-.form-group small {
+.form-hint {
     display: block;
     margin-top: var(--spacing-xs);
     color: var(--color-text-light);
     font-size: var(--font-size-xs);
+    line-height: 1.4;
 }
 
-.form-divider {
-    margin: var(--spacing-lg) 0 var(--spacing-md) 0;
-    padding-top: var(--spacing-md);
+.form-actions {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
     border-top: 1px solid var(--color-border);
-}
-
-.form-divider h3 {
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-xs);
-    color: var(--color-text);
-}
-
-.form-divider p {
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-md);
-    font-size: var(--font-size-sm);
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    background: var(--color-surface);
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: var(--color-text-light);
 }
 
 .btn-submit {
     background: var(--color-text);
-    color: var(--color-bg);
-    border: none;
+    color: var(--color-surface);
+    border: 2px solid var(--color-text);
     padding: var(--spacing-sm) var(--spacing-md);
     font-size: var(--font-size-md);
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition);
-    margin-top: var(--spacing-md);
+    border-radius: 2px;
+    min-width: 200px;
 }
 
 .btn-submit:hover {
     background: var(--color-accent);
+    border-color: var(--color-accent);
     transform: translateY(-2px);
 }
 
@@ -637,17 +666,19 @@ body {
 
 .btn-submit:disabled {
     background: var(--color-text-light);
+    border-color: var(--color-text-light);
     cursor: not-allowed;
     opacity: 0.6;
 }
 
 .form-message {
     margin-top: var(--spacing-md);
-    padding: var(--spacing-sm);
-    text-align: center;
-    border-radius: var(--radius);
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    border-radius: 2px;
     display: none;
     font-size: var(--font-size-sm);
+    border-left: 4px solid transparent;
 }
 
 .form-message.show {
@@ -657,16 +688,17 @@ body {
 .form-message.success {
     background: #e8f5e9;
     color: #2e7d32;
-    border: 1px solid #4caf50;
+    border-left-color: #4caf50;
 }
 
 .form-message.error {
     background: #ffebee;
     color: #c62828;
-    border: 1px solid #f44336;
+    border-left-color: #f44336;
 }
 
-/* Responsive */
+/* ===== RESPONSIVE ===== */
+
 @media (max-width: 768px) {
     .site-header .container {
         flex-direction: column;
@@ -700,5 +732,14 @@ body {
 
     .specimen-form {
         padding: var(--spacing-md);
+    }
+
+    .form-section {
+        margin-bottom: var(--spacing-lg);
+        padding-bottom: var(--spacing-lg);
+    }
+
+    .btn-submit {
+        width: 100%;
     }
 }
