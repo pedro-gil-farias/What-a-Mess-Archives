@@ -70,65 +70,19 @@
                     <p class="section-description">Found an interesting urban detail? Share it with our community by submitting a specimen.</p>
                     
                     <form
-                        id="specimen-form"
-                        class="specimen-form"
                         action="https://formspree.io/f/mpqjqbzq"
                         method="POST"
-                        enctype="multipart/form-data"
-                    >
-                        <!-- Basic Info Section -->
-                        <div class="form-section">
-                            <h3 class="form-section-title">Specimen Details</h3>
-                            
-                            <div class="form-group">
-                                <label for="title" class="form-label">Title *</label>
-                                <input class="form-input" type="text" id="title" name="title" required placeholder="e.g., S012_BrokenTile">
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="location" class="form-label">Location *</label>
-                                    <input class="form-input" type="text" id="location" name="location" required placeholder="e.g., Rotterdam, The Netherlands">
-                                </div>
-                                <div class="form-group">
-                                    <label for="date" class="form-label">Date Captured *</label>
-                                    <input class="form-input" type="date" id="date" name="date" required>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="latitude" class="form-label">Latitude *</label>
-                                    <input class="form-input" type="number" id="latitude" name="latitude" required step="0.00001" placeholder="51.917585">
-                                </div>
-                                <div class="form-group">
-                                    <label for="longitude" class="form-label">Longitude *</label>
-                                    <input class="form-input" type="number" id="longitude" name="longitude" required step="0.00001" placeholder="4.481677">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="description" class="form-label">Description *</label>
-                                <textarea class="form-input form-textarea" id="description" name="description" required rows="6" placeholder="Describe what you found and why it's interesting..."></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="tags" class="form-label">Tags (comma-separated)</label>
-                                <input class="form-input" type="text" id="tags" name="tags" placeholder="e.g., industrial, furniture, graffiti, materials">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="model-file" class="form-label">3D Model (GLB format) *</label>
-                                <input class="form-input form-file-input" type="file" id="model-file" name="model_glb" accept=".glb,.gltf" required>
-                                <small class="form-hint">Supported: GLB, GLTF - Max 100MB</small>
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="form-actions">
-                            <button type="submit" class="btn-submit">Submit Specimen</button>
-                            <div id="form-message" class="form-message"></div>
-                        </div>
+                        >
+                        <label>
+                            Your email:
+                            <input type="email" name="email">
+                        </label>
+                        <label>
+                            Your message:
+                            <textarea name="message"></textarea>
+                        </label>
+                        <!-- your other form fields go here -->
+                        <button type="submit">Send</button>
                     </form>
                 </div>
             </div>
