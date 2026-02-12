@@ -64,7 +64,7 @@ a:hover {
     max-width: 100%;
     width: 100%;
     margin: 0 auto;
-    padding: 0;
+    padding: 0 var(--spacing-xs);
 }
 
 /* Header */
@@ -84,7 +84,6 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     padding-top: var(--spacing-xs);
-    padding-left: var(--spacing-xs);
     padding-bottom: var(--spacing-xs);
     gap: var(--spacing-xs);
 }
@@ -258,7 +257,7 @@ a:hover {
 /* Grid */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
     gap: var(--spacing-xs);
     margin-bottom: var(--spacing-xs);
 }
@@ -500,7 +499,7 @@ a:hover {
 /* Aggregate specific */
 .aggregate-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(500px, 100%), 1fr));
     gap: var(--spacing-sm);
 }
 
@@ -524,31 +523,68 @@ a:hover {
 
 /* ===== RESPONSIVE ===== */
 
+/* Tablet and below */
+@media (max-width: 1024px) {
+    .modal-content {
+        max-width: 90%;
+        margin: 3rem auto;
+    }
+    
+    .aggregate-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile landscape and below */
 @media (max-width: 768px) {
     .site-header .container {
         flex-direction: column;
         gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
     }
     
     .site-title {
         font-size: var(--font-size-sm);
+        max-width: 100%;
+    }
+    
+    .main-nav {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
     }
     
     .section-title {
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-lg);
     }
     
     .grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+    
+    .aggregate-grid {
         grid-template-columns: 1fr;
     }
     
     .detail-info {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .detail-viewer model-viewer,
+    .dustball-collage {
+        height: 400px;
     }
     
     .modal-content {
         margin: 1rem;
         max-height: calc(100vh - 2rem);
+        max-width: calc(100% - 2rem);
+    }
+    
+    #modal-body {
+        padding: var(--spacing-sm);
     }
 
     .form-row {
@@ -566,5 +602,73 @@ a:hover {
 
     .btn-submit {
         width: 100%;
+    }
+}
+
+/* Mobile portrait */
+@media (max-width: 480px) {
+    body {
+        font-size: 16px;
+    }
+    
+    .site-header .container {
+        padding: var(--spacing-xs);
+    }
+    
+    .site-title {
+        font-size: var(--font-size-xs);
+    }
+    
+    .nav-link {
+        padding: var(--spacing-xs);
+        font-size: var(--font-size-xs);
+    }
+    
+    .main-content {
+        padding: var(--spacing-xs) 0;
+    }
+    
+    .sort-controls {
+        gap: var(--spacing-xs);
+        padding: 0 var(--spacing-xs);
+    }
+    
+    .sort-btn {
+        padding: 0.4rem;
+        font-size: 0.75rem;
+    }
+    
+    .grid,
+    .aggregate-grid {
+        gap: var(--spacing-xs);
+    }
+    
+    .detail-viewer model-viewer,
+    .dustball-collage {
+        height: 300px;
+    }
+    
+    .modal-content {
+        margin: 0.5rem;
+        max-height: calc(100vh - 1rem);
+        max-width: calc(100% - 1rem);
+    }
+    
+    #modal-body {
+        padding: var(--spacing-xs);
+    }
+    
+    .detail-main h2 {
+        font-size: var(--font-size-lg);
+    }
+    
+    .meta-item {
+        font-size: var(--font-size-sm);
+    }
+    
+    .modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1.75rem;
     }
 }

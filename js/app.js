@@ -51,6 +51,7 @@ function init() {
     renderAggregates();
     setupNavigation();
     setupModal();
+    handleDeepLink(); // Handle initial URL
 }
 
 // Render specimen cards (minimal: image only).
@@ -91,24 +92,101 @@ function renderAggregates() {
 
 // Setup navigation tab switching.
 function setupNavigation() {
+    // Function to switch to a section
+    function switchToSection(targetSection) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        sections.forEach(section => {
+            if (section.id === targetSection) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+        // Update active nav link
+        navLinks.forEach(link => {
+            if (link.getAttribute('data-section') === targetSection) {
+                link.classList.add('active');
+            }
+        });
+    }
+
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const targetSection = link.getAttribute('data-section');
-            
-            // Update active states
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-            
-            sections.forEach(section => {
-                if (section.id === targetSection) {
-                    section.classList.add('active');
-                } else {
-                    section.classList.remove('active');
-                }
-            });
+            switchToSection(targetSection);
+            // Update URL without page reload
+            window.history.pushState({ section: targetSection }, '', `#${targetSection}`);
         });
     });
+
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', (e) => {
+        handleDeepLink();
+    });
+
+    // Handle initial page load with hash
+    const initialHash = window.location.hash.slice(1);
+    if (initialHash && document.getElementById(initialHash)) {
+        switchToSection(initialHash);
+    }
+}
+
+// Handle deep links for sections and modals
+function handleDeepLink() {
+    const hash = window.location.hash.slice(1); // Remove the #
+    
+    if (!hash) {
+        // No hash, show default section
+        return;
+    }
+    
+    // Check if it's a modal deep link (format: section/id)
+    const parts = hash.split('/');
+    
+    if (parts.length === 2) {
+        const [section, id] = parts;
+        
+        // Switch to the correct section first
+        navLinks.forEach(l => l.classList.remove('active'));
+        sections.forEach(sec => {
+            if (sec.id === section) {
+                sec.classList.add('active');
+            } else {
+                sec.classList.remove('active');
+            }
+        });
+        navLinks.forEach(link => {
+            if (link.getAttribute('data-section') === section) {
+                link.classList.add('active');
+            }
+        });
+        
+        // Open the modal
+        if (section === 'specimens') {
+            openSpecimenModal(id, true);
+        } else if (section === 'aggregates') {
+            openAggregateModal(id, true);
+        }
+    } else if (parts.length === 1) {
+        // Just a section, ensure modal is closed
+        closeModal(true);
+        
+        // Switch to section
+        navLinks.forEach(l => l.classList.remove('active'));
+        sections.forEach(section => {
+            if (section.id === hash) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+        navLinks.forEach(link => {
+            if (link.getAttribute('data-section') === hash) {
+                link.classList.add('active');
+            }
+        });
+    }
 }
 
 // Setup sorting controls.
@@ -242,7 +320,7 @@ function setupModal() {
 }
 
 // Open specimen detail modal and show a model-viewer preview.
-function openSpecimenModal(id) {
+function openSpecimenModal(id, skipHistory = false) {
     const specimen = specimens.find(s => s.id === id);
     if (!specimen) return;
 
@@ -307,7 +385,7 @@ function openSpecimenModal(id) {
         </div>
     `;
 
-    modalBody.querySelectorAll('.aggregate-link').forEach(link => {
+    modalBody.querySelectorAll('[data-aggregate-id]').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const aggregateId = link.getAttribute('data-aggregate-id');
@@ -317,10 +395,15 @@ function openSpecimenModal(id) {
     
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    
+    // Update URL
+    if (!skipHistory) {
+        window.history.pushState({ type: 'specimen', id: id }, '', `#specimens/${id}`);
+    }
 }
 
 // Open aggregate detail modal and assemble a Three.js collage.
-function openAggregateModal(id) {
+function openAggregateModal(id, skipHistory = false) {
     const aggregate = aggregates.find(a => a.id === id);
     if (!aggregate) return;
     
@@ -367,7 +450,7 @@ function openAggregateModal(id) {
     `;
 
     // Add click handlers for specimen links in the aggregate view.
-    modalBody.querySelectorAll('.specimen-link').forEach(link => {
+    modalBody.querySelectorAll('[data-specimen-id]').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const specimenId = link.getAttribute('data-specimen-id');
@@ -673,15 +756,26 @@ function openAggregateModal(id) {
             container.innerHTML = '<p style="color: var(--color-text-light); text-align: center; padding: 2rem;">Unable to load 3D collage. Please check your connection and model paths.</p>';
         }
     });
+    
+    // Update URL
+    if (!skipHistory) {
+        window.history.pushState({ type: 'aggregate', id: id }, '', `#aggregates/${id}`);
+    }
 }
 
 // Close modal and restore page scroll.
-function closeModal() {
+function closeModal(skipHistory = false) {
     modal.classList.remove('active');
     document.body.style.overflow = '';
     if (collageIntervalId) {
         clearInterval(collageIntervalId);
         collageIntervalId = null;
+    }
+    
+    // Update URL back to just the section
+    if (!skipHistory) {
+        const currentSection = document.querySelector('.section.active')?.id || 'specimens';
+        window.history.pushState({ section: currentSection }, '', `#${currentSection}`);
     }
 }
 
@@ -693,6 +787,11 @@ function formatDate(dateString) {
         month: 'long', 
         day: 'numeric' 
     });
+}
+
+// Stub for submission form setup (if needed in the future)
+function setupSubmissionForm() {
+    // Placeholder for future submission form functionality
 }
 
 
