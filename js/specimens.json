@@ -217,6 +217,58 @@
     },
 
     {
+      "id": "S018",
+      "title": "The Eagles",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.9047,
+      "longitude": 4.5195,
+      "date": "2023-04-29",
+      "description": "sampled from the Rush World Rotterdam-Zuid domed buildings found further down along the Nieuwe Maas. On them were tagged letters and eagles, presumably (but not confirmed) associated with a football team, the Go Ahead Eagles. The tag’s somewhat shaky yet large annotations surprised the group. Prior to looking into the eagle’s possible meaning, the bird as well as the black and red scheme also raised questions around darker associations with possible neo-nazi groups..",
+      "modelPath": "models/S018_TheEagles.glb",
+      "thumbnail": "images/S018_TheEagles.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S019",
+      "title": "Stadion Park Vision",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.9035,
+      "longitude": 4.5120,
+      "date": "2023-04-29",
+      "description": "A temporary facade surrounding a vacant lot being installed. Full of aspirational fervor, the facade is composed of a series of large scale canvas prints mounted on a chain link fence depicting scenes of enjoyable city life in Stadionpark, which is to become “An area that will change in the coming years into a place where, in addition to living, sports, entrepreneurship, nature, leisure and experience come together” according to the website a QR code on the print links to. Expansive, self-assured and consensual, the prints were optimistic but appeared a bit hollow..",
+      "modelPath": "models/S019_StadionParkVision.glb",
+      "thumbnail": "images/S019_StadionParkVision.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S020",
+      "title": "Building In Progress",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.9053,
+      "longitude": 4.5075,
+      "date": "2023-04-29",
+      "description": "The striking layering of tags covering each floor of the abandoned six-storied building got the group to discuss the colorful annotations as a reminder of the passing of time. One specifically, saying Eid Mubarak, made a participant wonder if it was referring to the Eid al-Fitr celebration from a week ago giving the crumbling building a sense of recency and currentness. At the foot of the building, spray cans and DIY elevated platforms left behind were seen as a standing invitation to continue their previous users’ creative efforts.",
+      "modelPath": "models/S020_BuildingInProgress.glb",
+      "thumbnail": "images/S020_BuildingInProgress.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S021",
+      "title": "Sticker Altar",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.9031,
+      "longitude": 4.5117,
+      "date": "2023-04-29",
+      "description": "The final scan of the workshop is a box found in an underpass at the end of Rotterdam-Zuid metro station. The box was covered in stickers including the work of several staples of the Rotterdam sticker scene such as ExitRdm, Lempke, Harvey Ball. The group felt capturing it would make the perfect conclusion to a workshop dedicated to the annotated city.",
+      "modelPath": "models/S021_StickerAltar.glb",
+      "thumbnail": "images/S021_StickerAltar.png",
+      "gifPath": ""
+    },
+
+    {
       "id": "S022",
       "title": "S022_MaritimeSnail",
       "location": "Rotterdam, The Netherlands",

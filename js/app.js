@@ -331,6 +331,7 @@ function openSpecimenModal(id, skipHistory = false) {
     modalBody.innerHTML = `
         <div class="detail-viewer">
             <model-viewer
+                id="specimen-model"
                 src="${basePath}${specimen.modelPath}"
                 alt="${specimen.title}"
                 camera-controls
@@ -384,6 +385,16 @@ function openSpecimenModal(id, skipHistory = false) {
             </div>
         </div>
     `;
+
+    const modelViewer = modalBody.querySelector('#specimen-model');
+    if (modelViewer) {
+        modelViewer.addEventListener('load', () => {
+            const materials = modelViewer.model?.materials || [];
+            materials.forEach((mat) => {
+                mat.doubleSided = true;
+            });
+        }, { once: true });
+    }
 
     modalBody.querySelectorAll('[data-aggregate-id]').forEach(link => {
         link.addEventListener('click', (e) => {
