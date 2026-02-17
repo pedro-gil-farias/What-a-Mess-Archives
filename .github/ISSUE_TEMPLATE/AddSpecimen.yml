@@ -1,6 +1,6 @@
 name: Add 3D Scan
 description: Submit a new 3D scan entry to be added to the dataset
-title: "Add 3D Scan: <ID or Title>"
+title: "Add 3D Scan: {{title}}"
 labels:
   - 3d-scan
   - data-submission
@@ -14,20 +14,11 @@ body:
         Please fill out the fields below. The information will be reviewed and added to the dataset.
 
   - type: input
-    id: id
-    attributes:
-      label: Scan ID
-      description: Unique identifier (e.g. S002)
-      placeholder: S002
-    validations:
-      required: true
-
-  - type: input
     id: title
     attributes:
       label: Title
       description: Descriptive title for the scan
-      placeholder: S002_ChurchRenovation
+      placeholder: Church Renovation
     validations:
       required: true
 
@@ -41,20 +32,11 @@ body:
       required: true
 
   - type: input
-    id: latitude
+    id: mapsLink
     attributes:
-      label: Latitude
-      description: Decimal degrees (e.g. 57.7089)
-      placeholder: "57.7089"
-    validations:
-      required: true
-
-  - type: input
-    id: longitude
-    attributes:
-      label: Longitude
-      description: Decimal degrees (e.g. 11.9746)
-      placeholder: "11.9746"
+      label: Google Maps Link
+      description: Share a Google Maps link to the location
+      placeholder: https://maps.google.com/?q=57.7089,11.9746
     validations:
       required: true
 
@@ -76,30 +58,30 @@ body:
     validations:
       required: true
 
-  - type: input
-    id: modelPath
+  - type: file
+    id: modelFile
     attributes:
-      label: Model Path (.glb)
-      description: Relative path to the 3D model file
-      placeholder: models/S002_ChurchRenovation.glb
+      label: 3D Model File (.glb)
+      description: Upload the 3D model file
+      accept: ".glb"
     validations:
       required: true
 
-  - type: input
-    id: thumbnail
+  - type: file
+    id: thumbnailImage
     attributes:
-      label: Thumbnail Image Path
-      description: Relative path to the thumbnail image
-      placeholder: images/S002_ChurchRenovation.png
+      label: Thumbnail Image
+      description: Upload the thumbnail image
+      accept: ".png,.jpg,.jpeg"
     validations:
       required: true
 
-  - type: input
-    id: gifPath
+  - type: file
+    id: gifFile
     attributes:
       label: GIF Path (optional)
-      description: Relative path to an animated preview (leave empty if none)
-      placeholder: images/S002_ChurchRenovation.gif
+      description: Upload an animated preview (optional)
+      accept: ".gif"
     validations:
       required: false
 
