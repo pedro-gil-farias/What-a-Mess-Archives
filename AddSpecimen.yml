@@ -1,0 +1,114 @@
+name: Add 3D Scan
+description: Submit a new 3D scan entry to be added to the dataset
+title: "Add 3D Scan: <ID or Title>"
+labels:
+  - 3d-scan
+  - data-submission
+  - needs-review
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing a 3D scan!
+        Please fill out the fields below. The information will be reviewed and added to the dataset.
+
+  - type: input
+    id: id
+    attributes:
+      label: Scan ID
+      description: Unique identifier (e.g. S002)
+      placeholder: S002
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: Descriptive title for the scan
+      placeholder: S002_ChurchRenovation
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: City and country
+      placeholder: Gothenburg, Sweden
+    validations:
+      required: true
+
+  - type: input
+    id: latitude
+    attributes:
+      label: Latitude
+      description: Decimal degrees (e.g. 57.7089)
+      placeholder: "57.7089"
+    validations:
+      required: true
+
+  - type: input
+    id: longitude
+    attributes:
+      label: Longitude
+      description: Decimal degrees (e.g. 11.9746)
+      placeholder: "11.9746"
+    validations:
+      required: true
+
+  - type: input
+    id: date
+    attributes:
+      label: Capture Date
+      description: Date the scan was captured (YYYY-MM-DD)
+      placeholder: 2023-03-26
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Detailed description of the scene, context, and significance
+      placeholder: Describe the environment, conditions, and why this scan matters
+    validations:
+      required: true
+
+  - type: input
+    id: modelPath
+    attributes:
+      label: Model Path (.glb)
+      description: Relative path to the 3D model file
+      placeholder: models/S002_ChurchRenovation.glb
+    validations:
+      required: true
+
+  - type: input
+    id: thumbnail
+    attributes:
+      label: Thumbnail Image Path
+      description: Relative path to the thumbnail image
+      placeholder: images/S002_ChurchRenovation.png
+    validations:
+      required: true
+
+  - type: input
+    id: gifPath
+    attributes:
+      label: GIF Path (optional)
+      description: Relative path to an animated preview (leave empty if none)
+      placeholder: images/S002_ChurchRenovation.gif
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I confirm that the paths exist in the repository (or will be added in this PR)
+          required: true
+        - label: I confirm the metadata is accurate to the best of my knowledge
+          required: true
