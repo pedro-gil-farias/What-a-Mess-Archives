@@ -21,6 +21,7 @@ const modalClose = document.querySelector('.modal-close');
 const modalOverlay = document.querySelector('.modal-overlay');
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('.section');
+const headerSortControls = document.getElementById('header-sort-controls');
 
 // Load data from JSON files and kick off the app.
 async function loadData() {
@@ -51,14 +52,26 @@ function init() {
     renderAggregates();
     setupNavigation();
     setupModal();
+    updateHeaderSortVisibility(getActiveSectionId());
     handleDeepLink(); // Handle initial URL
+}
+
+function getActiveSectionId() {
+    const activeSection = document.querySelector('.section.active');
+    return activeSection ? activeSection.id : 'specimens';
+}
+
+function updateHeaderSortVisibility(sectionId) {
+    if (!headerSortControls) return;
+    headerSortControls.style.display = sectionId === 'specimens' ? 'flex' : 'none';
 }
 
 // Render specimen cards (minimal: image only).
 function renderSpecimens(specimensList = specimens) {
     specimensGrid.innerHTML = specimensList.map(specimen => `
         <div class="card" data-type="specimen" data-id="${specimen.id}">
-            <img src="${basePath}${specimen.thumbnail}" ${specimen.gifPath ? `data-gif="${basePath}${specimen.gifPath}"` : ''} alt="${specimen.title}" class="card-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22280%22%3E%3Crect fill=%22%23f5f2ed%22 width=%22400%22 height=%22280%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22monospace%22 font-size=%2216%22 fill=%22%236b6560%22%3E3D Model Placeholder%3C/text%3E%3C/svg%3E'">
+            <img src="${basePath}${specimen.thumbnail}" ${specimen.gifPath ? `data-gif="${basePath}${specimen.gifPath}"` : ''} alt="${specimen.title}" class="card-image">
+            <div class="card-fallback" aria-hidden="true">${specimen.title}</div>
         </div>
     `).join('');
 
@@ -66,17 +79,23 @@ function renderSpecimens(specimensList = specimens) {
         specimensGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: var(--spacing-lg); color: var(--color-text-light);">No specimens available.</p>';
     }
 
-    // Add hover listeners for image/gif swap
+    // Add hover listeners for image/gif swap and fallback for missing images.
     specimensGrid.querySelectorAll('.card-image').forEach(img => {
         const gifPath = img.getAttribute('data-gif');
         const originalSrc = img.src;
+        const card = img.closest('.card');
+
+        img.addEventListener('error', () => {
+            img.dataset.hasError = 'true';
+            if (card) card.classList.add('missing-image');
+        });
         
         img.addEventListener('mouseenter', () => {
-            if (gifPath) img.src = gifPath;
+            if (gifPath && !img.dataset.hasError) img.src = gifPath;
         });
         
         img.addEventListener('mouseleave', () => {
-            img.src = originalSrc;
+            if (!img.dataset.hasError) img.src = originalSrc;
         });
     });
 }
@@ -85,9 +104,18 @@ function renderSpecimens(specimensList = specimens) {
 function renderAggregates() {
     aggregatesGrid.innerHTML = aggregates.map(aggregate => `
         <div class="card" data-type="aggregate" data-id="${aggregate.id}">
-            <img src="${basePath}${aggregate.thumbnail}" alt="${aggregate.title}" class="card-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22280%22%3E%3Crect fill=%22%23f5f2ed%22 width=%22400%22 height=%22280%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22monospace%22 font-size=%2216%22 fill=%22%236b6560%22%3EAggregate Collection%3C/text%3E%3C/svg%3E'">
+            <img src="${basePath}${aggregate.thumbnail}" alt="${aggregate.title}" class="card-image">
+            <div class="card-fallback" aria-hidden="true">${aggregate.title}</div>
         </div>
     `).join('');
+
+    aggregatesGrid.querySelectorAll('.card-image').forEach(img => {
+        const card = img.closest('.card');
+        img.addEventListener('error', () => {
+            img.dataset.hasError = 'true';
+            if (card) card.classList.add('missing-image');
+        });
+    });
 }
 
 // Setup navigation tab switching.
@@ -102,6 +130,7 @@ function setupNavigation() {
                 section.classList.remove('active');
             }
         });
+        updateHeaderSortVisibility(targetSection);
         // Update active nav link
         navLinks.forEach(link => {
             if (link.getAttribute('data-section') === targetSection) {
@@ -161,6 +190,7 @@ function handleDeepLink() {
                 link.classList.add('active');
             }
         });
+        updateHeaderSortVisibility(section);
         
         // Open the modal
         if (section === 'specimens') {
@@ -186,6 +216,7 @@ function handleDeepLink() {
                 link.classList.add('active');
             }
         });
+        updateHeaderSortVisibility(hash);
     }
 }
 
@@ -337,6 +368,7 @@ function openSpecimenModal(id, skipHistory = false) {
                 auto-rotate
                 shadow-intensity="0"
                 camera-orbit="-45deg 55deg 15m"
+                min-camera-orbit="auto auto 1m"
                 loading="eager">
             </model-viewer>
         </div>

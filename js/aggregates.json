@@ -3,7 +3,7 @@
     {
       "id": "A001",
       "title": "The Working City",
-      "description": "...",
+      "description": "Work, is the activity involving mental or physical effort done in order to achieve a purpose or result. Cities, as micro-organisms built by and for humans are filled with endless indications of the work that not only built and maintains the cities but the work also permitted by such contraptions.",
       "thumbnail": "images/A001_TheWorkingCity.png",
       "specimenIds": ["S001", "S002", "S003", "S004", "S005"],
       "curatedBy": "What A Mess",
@@ -25,9 +25,29 @@
       "title": "The Porous City",
       "description": "Something is porous when it has several openings that allow easy passage (of liquid, air, things, people, information, etc.). A porous city could be imagined as one that encourages openness, exchange, interaction, and fluidity between different groups, cultural identities, and spaces. It’s a city that would value in-between spaces: leisure and work, affordable and less affordable housing, between public and private, prescriptive and open, formal and informal… It’s a city that is in a state of constant transformation, and is never fully closed off or rigidly defined.",
       "thumbnail": "images/A003_ThePorousCity.png",
-      "specimenIds": ["S006", "S007", "S008", "S009", "S010", "S011"],
+      "specimenIds": ["S012", "S013", "S014", "S015", "S016"],
       "curatedBy": "w/ <a href=\"https://motelmozaique.nl/archive/2023-2/\">MOMO Festival 2023</a>",
       "dateCreated": "2023-04-03"
+    },
+
+    {
+      "id": "A004",
+      "title": "The Annotated City",
+      "description": "Annotation refers to the act of adding notes, comments, or explanations to a text, image, or other type of media. In the context of art in the public space, graffiti and street art are common forms of annotation on the urban landscape. Through the use of spray paint, stencils, stickers, and other materials, graffiti writers and other groups annotate the city with their own personal expressions, statements, and messages. These annotations can take many forms, from tags to complex murals, and can serve a variety of purposes, including artistic expression, social commentary, and political activism",
+      "thumbnail": "images/A004_TheAnnotatedCity.png",
+      "specimenIds": ["S017", "S018", "S019", "S020", "S021"],
+      "curatedBy": "w/ <a href=\"https://all-caps.nl/\">ALL CAPS</a>",
+      "dateCreated": "2023-04-29"
+    },
+
+    {
+      "id": "A005",
+      "title": "The Secret City",
+      "description": "From secret urinols, to misterious snail sculptures that are nowhere to be found anymore, the city is full of secrets. Some hidden in plain sight, others more elusive.",
+      "thumbnail": "images/A005_TheSecretCity.png",
+      "specimenIds": ["S022", "S023", "S024", "S025", "S026"],
+      "curatedBy": "What A Mess</a>",
+      "dateCreated": "2023-04-29"
     }
   ]
 }

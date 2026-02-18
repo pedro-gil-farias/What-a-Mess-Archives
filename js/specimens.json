@@ -331,7 +331,33 @@
       "modelPath": "models/S026_BikeRack.glb",
       "thumbnail": "images/S026_BikeRack.png",
       "gifPath": ""
-    }
+    },
+
+    {
+      "id": "S037",
+      "title": "S027_PalaisdeTokyoDIY",
+      "location": "Paris, France",
+      "latitude": 48.8640,
+      "longitude": 2.2974,
+      "date": "2023-07-23",
+      "description": "Located at the entrance of <a href='https://www.palaisdetokyo.com/en'>Palais de Tokyo</a> in Paris, the scan captures a pyramidal rail surrounded by white marble stairs and a dormant fountain. Located in a famous skate spot, the constrasting wood structure, seems to be the remainants of a DIY skate spot. Authorized or not, the side of the rail is stenciled with the words 'Zadig et Voltaire', a luxury French fashion brand, which hints that what was before a place of contestation by skaters, is now a setting for brand campaigns.",
+      "modelPath": "models/S037_PalaisdeTokyoDIY.glb",
+      "thumbnail": "images/S037_PalaisdeTokyoDIY.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S038",
+      "title": "La Roche Fleurie",
+      "location": "Paris, France",
+      "latitude": 48.8640,
+      "longitude": 2.2974,
+      "date": "2023-07-25",
+      "description": "A sign mimicking handwritten lettering, placed above a green postbox on a white fence next to a brick wall. The sign reads 'La Roche Fleurie', which is literaly translates to 'The Rock Flowery'. Appropriate as the scan was taken in the picturesque Veules-les-Roses village.",
+      "modelPath": "models/S038_LaRocheFleurie.glb",
+      "thumbnail": "images/S038_LaRocheFleurie.png",
+      "gifPath": ""
+    }    
     
   ]
 }
