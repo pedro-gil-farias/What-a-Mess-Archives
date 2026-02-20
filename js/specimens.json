@@ -349,7 +349,7 @@
     {
       "id": "S038",
       "title": "La Roche Fleurie",
-      "location": "Paris, France",
+      "location": "Veules-les-Roses, France",
       "latitude": 48.8640,
       "longitude": 2.2974,
       "date": "2023-07-25",
@@ -357,7 +357,98 @@
       "modelPath": "models/S038_LaRocheFleurie.glb",
       "thumbnail": "images/S038_LaRocheFleurie.png",
       "gifPath": ""
-    }    
+    },
+
+    {
+      "id": "S039",
+      "title": "Attention Aux Moutons",
+      "location": "Pontorson, France",
+      "latitude": 48.6178,
+      "longitude": -1.4905,
+      "date": "2023-07-30",
+      "description": "Whatever you do be careful with the sheep.",
+      "modelPath": "models/S039_AttentionAuxMoutons.glb",
+      "thumbnail": "images/S039_AttentionAuxMoutons.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S040",
+      "title": "Rusty Swing",
+      "location": "Ourém, Portugal",
+      "latitude": 39.6031,
+      "longitude": -8.6706,
+      "date": "2023-08-07",
+      "description": "",
+      "modelPath": "models/S040_RustySwing.glb",
+      "thumbnail": "images/S040_RustySwing.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S041",
+      "title": "Roussillon Gate",
+      "location": "Roussillon, France",
+      "latitude": 48.6178,
+      "longitude": -1.4905,
+      "date": "2023-08-15",
+      "description": "",
+      "modelPath": "models/S041_RoussillonGate.glb",
+      "thumbnail": "images/S041_RoussillonGate.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S042",
+      "title": "Roussillon Stairs",
+      "location": "Roussillon, France",
+      "latitude": 48.6178,
+      "longitude": -1.4905,
+      "date": "2023-08-15",
+      "description": "",
+      "modelPath": "models/S042_RoussillonStairs.glb",
+      "thumbnail": "images/S042_RoussillonStairs.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S043",
+      "title": "Green Balconies",
+      "location": "Avignon, France",
+      "latitude": 43.9493,
+      "longitude": 4.8055,
+      "date": "2023-08-18",
+      "description": "",
+      "modelPath": "models/S043_GreenBalconies.glb",
+      "thumbnail": "images/S043_GreenBalconies.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S044",
+      "title": "Avignon Postbox",
+      "location": "Avignon, France",
+      "latitude": 43.9493,
+      "longitude": 4.8055,
+      "date": "2023-08-18",
+      "description": "",
+      "modelPath": "models/S044_AvignonPostbox.glb",
+      "thumbnail": "images/S044_AvignonPostbox.png",
+      "gifPath": ""
+    },
+
+    {
+      "id": "S045",
+      "title": "Castle Corner",
+      "location": "",
+      "latitude": 0,
+      "longitude": 0,
+      "date": "2023-08-19",
+      "description": "",
+      "modelPath": "models/S045_CastleCorner.glb",
+      "thumbnail": "images/S045_CastleCorner.png",
+      "gifPath": ""
+    }
     
   ]
 }
