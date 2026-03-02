@@ -22,6 +22,7 @@ const modalOverlay = document.querySelector('.modal-overlay');
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('.section');
 const headerSortControls = document.getElementById('header-sort-controls');
+const headerCarouselControls = document.getElementById('header-carousel-controls');
 
 // Load data from JSON files and kick off the app.
 async function loadData() {
@@ -50,6 +51,7 @@ function init() {
     setupSorting();
     applySort();
     renderAggregates();
+    setupCarousel();
     setupNavigation();
     setupModal();
     updateHeaderSortVisibility(getActiveSectionId());
@@ -62,8 +64,16 @@ function getActiveSectionId() {
 }
 
 function updateHeaderSortVisibility(sectionId) {
-    if (!headerSortControls) return;
-    headerSortControls.style.display = sectionId === 'specimens' ? 'flex' : 'none';
+    if (headerSortControls) {
+        headerSortControls.style.display = sectionId === 'specimens' ? 'flex' : 'none';
+    }
+    if (headerCarouselControls) {
+        headerCarouselControls.style.display = sectionId === 'carousel' ? 'flex' : 'none';
+    }
+    const carouselCaption = document.getElementById('carousel-caption');
+    if (carouselCaption) {
+        carouselCaption.style.display = sectionId === 'carousel' ? 'block' : 'none';
+    }
 }
 
 // Render specimen cards (minimal: image only).
@@ -146,6 +156,13 @@ function setupNavigation() {
             switchToSection(targetSection);
             // Update URL without page reload
             window.history.pushState({ section: targetSection }, '', `#${targetSection}`);
+            
+            // Stop carousel autoplay if leaving carousel section, start if entering
+            if (targetSection === 'carousel') {
+                startCarouselAutoplay();
+            } else {
+                stopCarouselAutoplay();
+            }
         });
     });
 
@@ -158,6 +175,9 @@ function setupNavigation() {
     const initialHash = window.location.hash.slice(1);
     if (initialHash && document.getElementById(initialHash)) {
         switchToSection(initialHash);
+        if (initialHash === 'carousel') {
+            startCarouselAutoplay();
+        }
     }
 }
 
@@ -824,6 +844,156 @@ function formatDate(dateString) {
 // Stub for submission form setup (if needed in the future)
 function setupSubmissionForm() {
     // Placeholder for future submission form functionality
+}
+
+// Carousel functionality
+let carouselImages = [];
+let currentCarouselIndex = 0;
+let carouselAutoplayTimer = null;
+const AUTOPLAY_INTERVAL = 5000; // 5 seconds
+
+async function setupCarousel() {
+    try {
+        // Load manifestations from JSON file
+        const response = await fetch(`${basePath}js/manifestations.json`);
+        if (!response.ok) {
+            console.log('No manifestations.json found, carousel will be empty');
+            return;
+        }
+        
+        const data = await response.json();
+        // Store image objects with filename and caption
+        carouselImages = data.images.map(item => ({
+            filename: item.filename,
+            caption: item.caption || ''
+        }));
+        
+        if (carouselImages.length === 0) {
+            console.log('No images found in manifestations.json');
+            return;
+        }
+        
+        renderCarousel();
+        setupCarouselControls();
+        startCarouselAutoplay();
+    } catch (error) {
+        console.error('Error loading carousel images:', error);
+    }
+}
+
+function renderCarousel() {
+    const container = document.getElementById('carousel-image-container');
+    if (!container || carouselImages.length === 0) return;
+
+    const currentImage = carouselImages[currentCarouselIndex];
+    container.innerHTML = `
+        <img src="${basePath}manifestations/${currentImage.filename}" alt="${currentImage.caption || 'Gallery image'}" loading="lazy">
+    `;
+
+    updateCarouselButtons();
+    updateCarouselCounter();
+    updateCarouselCaption();
+}
+
+function setupCarouselControls() {
+    const prevBtn = document.querySelector('.carousel-btn-prev');
+    const nextBtn = document.querySelector('.carousel-btn-next');
+    const randomBtn = document.querySelector('.carousel-btn-random');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentCarouselIndex > 0) {
+                currentCarouselIndex--;
+                renderCarousel();
+                resetAutoplay();
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentCarouselIndex < carouselImages.length - 1) {
+                currentCarouselIndex++;
+                renderCarousel();
+                resetAutoplay();
+            }
+        });
+    }
+
+    if (randomBtn) {
+        randomBtn.addEventListener('click', () => {
+            goToRandomImage();
+            resetAutoplay();
+        });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        const carouselSection = document.getElementById('carousel');
+        if (!carouselSection || !carouselSection.classList.contains('active')) return;
+
+        if (e.key === 'ArrowLeft' && currentCarouselIndex > 0) {
+            currentCarouselIndex--;
+            renderCarousel();
+            resetAutoplay();
+        } else if (e.key === 'ArrowRight' && currentCarouselIndex < carouselImages.length - 1) {
+            currentCarouselIndex++;
+            renderCarousel();
+            resetAutoplay();
+        }
+    });
+}
+
+function updateCarouselButtons() {
+    const prevBtn = document.querySelector('.carousel-btn-prev');
+    const nextBtn = document.querySelector('.carousel-btn-next');
+    
+    if (prevBtn) prevBtn.disabled = currentCarouselIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentCarouselIndex === carouselImages.length - 1;
+}
+
+function updateCarouselCounter() {
+    const carouselCounter = document.querySelector('.carousel-counter');
+    if (carouselCounter && carouselImages.length > 0) {
+        carouselCounter.textContent = `${currentCarouselIndex + 1} / ${carouselImages.length}`;
+    }
+}
+
+function updateCarouselCaption() {
+    const carouselCaption = document.getElementById('carousel-caption');
+    if (carouselCaption && carouselImages.length > 0) {
+        const currentImage = carouselImages[currentCarouselIndex];
+        carouselCaption.textContent = currentImage.caption || '';
+    }
+}
+
+function startCarouselAutoplay() {
+    const carouselSection = document.getElementById('carousel');
+    if (!carouselSection || !carouselSection.classList.contains('active')) return;
+    
+    if (carouselAutoplayTimer) clearInterval(carouselAutoplayTimer);
+    
+    carouselAutoplayTimer = setInterval(() => {
+        goToRandomImage();
+    }, AUTOPLAY_INTERVAL);
+}
+
+function stopCarouselAutoplay() {
+    if (carouselAutoplayTimer) {
+        clearInterval(carouselAutoplayTimer);
+        carouselAutoplayTimer = null;
+    }
+}
+
+function resetAutoplay() {
+    stopCarouselAutoplay();
+    startCarouselAutoplay();
+}
+
+function goToRandomImage() {
+    if (carouselImages.length === 0) return;
+    currentCarouselIndex = Math.floor(Math.random() * carouselImages.length);
+    renderCarousel();
 }
 
 

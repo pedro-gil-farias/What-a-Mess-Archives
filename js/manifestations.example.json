@@ -1,0 +1,16 @@
+{
+    "images": [
+        {
+            "filename": "example1.jpg",
+            "caption": "This is an example caption for the first image"
+        },
+        {
+            "filename": "example2.png",
+            "caption": "Another example with a descriptive caption"
+        },
+        {
+            "filename": "example3.jpg",
+            "caption": ""
+        }
+    ]
+}
