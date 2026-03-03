@@ -887,7 +887,7 @@ function renderCarousel() {
 
     const currentImage = carouselImages[currentCarouselIndex];
     container.innerHTML = `
-        <img src="${basePath}manifestations/${currentImage.filename}" alt="${currentImage.caption || 'Gallery image'}" loading="lazy">
+        <img src="${basePath}Manifestations/${currentImage.filename}" alt="${currentImage.caption || 'Gallery image'}" loading="lazy">
     `;
 
     updateCarouselButtons();
