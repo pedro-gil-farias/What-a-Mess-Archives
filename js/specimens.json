@@ -288,7 +288,7 @@
       "latitude": 51.915826,
       "longitude": 4.476486,
       "date": "2023-03-17",
-      "description": "The rusty entrance of <a href='https://worm.org/'>WORM</a> showing layers of paint, graffiti and stickers, including a portrait of TUPAC, presumably by mosaic artist Satoshi Nakamoto",
+      "description": "The rusty entrance of <a href='https://worm.org/'>WORM</a> showing layers of paint, graffiti and stickers, including a portrait of TUPAC, presumably by mosaic artist <a href='https://www.instagram.com/satoshi_nakamoto_010/'>Satoshi Nakamoto</a>.",
       "modelPath": "models/S023_RustyEntrance.glb",
       "thumbnail": "images/S023_RustyEntrance.png",
       "gifPath": ""
