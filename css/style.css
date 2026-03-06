@@ -214,17 +214,20 @@ a:hover {
     color: var(--color-surface);
 }
 
-.sort-btn.active .icon {
-    transform: scaleY(1);
+/* Differentiate ascending vs descending sort order */
+.sort-btn.active[data-direction="↑"] {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
 }
 
-.sort-btn .icon {
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    flex-shrink: 0;
-    transition: transform var(--transition);
-    color: currentColor;
+.sort-btn.active[data-direction="↓"] {
+    background: var(--color-text);
+    border-color: var(--color-text);
+}
+
+.sort-btn.active[data-direction="⟳"] {
+    background: var(--color-text-light);
+    border-color: var(--color-text-light);
 }
 
 .sort-btn[data-tooltip]::after {
@@ -252,6 +255,108 @@ a:hover {
 
 .sort-btn[data-tooltip]:hover::before {
   opacity: 1;
+}
+
+/* Control SVG */
+
+.sort-btn svg {
+    width: 20px;
+    stroke: var(--color-accent);
+    stroke-width: 2;
+}
+
+.sort-btn:hover svg {
+    fill: var(--color-text-light);
+    stroke: var(--color-text-light);
+}
+
+.sort-btn.active svg {
+    fill: var(--color-surface);
+    stroke: var(--color-surface);
+}
+
+/* Aggregate sort buttons - same styles as specimen sort buttons */
+.aggregate-sort-btn {
+    padding: var(--spacing-xs) var(--spacing-xs);
+    border: 0px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.aggregate-sort-btn:hover {
+    border-color: var(--color-text-light);
+    background: var(--color-hover);
+}
+
+.aggregate-sort-btn.active {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-surface);
+}
+
+.aggregate-sort-btn.active[data-direction="↑"] {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.aggregate-sort-btn.active[data-direction="↓"] {
+    background: var(--color-text);
+    border-color: var(--color-text);
+}
+
+.aggregate-sort-btn.active[data-direction="⟳"] {
+    background: var(--color-text-light);
+    border-color: var(--color-text-light);
+}
+
+.aggregate-sort-btn[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 4px;
+  background: var(--color-text-light);
+  color: var(--color-surface);
+  font-size: 10px;
+  white-space: nowrap;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  margin-bottom: 8px;
+  z-index: 100;
+}
+
+.aggregate-sort-btn[data-tooltip]:hover::after {
+  opacity: 1;
+}
+
+.aggregate-sort-btn svg {
+    width: 20px;
+    stroke: var(--color-accent);
+    stroke-width: 2;
+}
+
+.aggregate-sort-btn:hover svg {
+    fill: var(--color-text-light);
+    stroke: var(--color-text-light);
+}
+
+.aggregate-sort-btn.active svg {
+    fill: var(--color-surface);
+    stroke: var(--color-surface);
 }
 
 /* Grid */
@@ -293,6 +398,47 @@ a:hover {
 
 .card.missing-image .card-image {
     opacity: 0;
+}
+
+.card-id {
+    position: absolute;
+    bottom: var(--spacing-xs);
+    left: var(--spacing-xs);
+    font-size: var(--font-size-xs);
+    color: var(--color-text);
+    background: rgba(250, 248, 245, 0.85);
+    padding: 2px 4px;
+    border-radius: var(--radius);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.card-date {
+    position: absolute;
+    bottom: var(--spacing-xs);
+    right: var(--spacing-xs);
+    font-size: var(--font-size-xs);
+    color: var(--color-text);
+    background: rgba(250, 248, 245, 0.85);
+    padding: 2px 4px;
+    border-radius: var(--radius);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.carousel-caption-below {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    background: rgba(250, 248, 245, 0.85);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius);
+    margin-top: var(--spacing-xs);
+    text-align: center;
+    max-width: 100%;
 }
 
 .card::before {
@@ -563,23 +709,48 @@ a:hover {
 }
 
 .carousel-btn {
-    background: transparent;
-    border: 1px solid var(--color-text);
+    padding: var(--spacing-xs) var(--spacing-xs);
+    border: 0px solid var(--color-border);
+    background: var(--color-bg);
     color: var(--color-text);
-    font-size: var(--font-size-sm);
-    padding: 1px 5px 1px 5px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
     cursor: pointer;
     transition: all var(--transition);
-    border-radius: var(--radius);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
 }
 
 .carousel-btn:hover {
+    border-color: var(--color-text-light);
     background: var(--color-hover);
 }
 
 .carousel-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
+}
+
+.carousel-counter {
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+}
+
+/* Carousel button SVG styling */
+.carousel-btn svg {
+    width: 20px;
+    stroke: var(--color-accent);
+    stroke-width: 2;
+}
+
+.carousel-btn:hover svg {
+    fill: var(--color-text-light);
+    stroke: var(--color-text-light);
 }
 
 .carousel-counter {

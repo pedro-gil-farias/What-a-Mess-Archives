@@ -10,6 +10,8 @@ let specimens = [];
 let aggregates = [];
 let currentSort = 'id';
 let currentDirection = 'asc';
+let currentAggregateSort = 'id';
+let currentAggregateDirection = 'asc';
 let collageIntervalId = null;
 
 // Cached DOM elements for performance and reuse.
@@ -22,6 +24,7 @@ const modalOverlay = document.querySelector('.modal-overlay');
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('.section');
 const headerSortControls = document.getElementById('header-sort-controls');
+const headerAggregateSortControls = document.getElementById('header-aggregate-sort-controls');
 const headerCarouselControls = document.getElementById('header-carousel-controls');
 
 // Load data from JSON files and kick off the app.
@@ -50,7 +53,8 @@ async function loadData() {
 function init() {
     setupSorting();
     applySort();
-    renderAggregates();
+    setupAggregateSorting();
+    applyAggregateSort();
     setupCarousel();
     setupNavigation();
     setupModal();
@@ -67,6 +71,9 @@ function updateHeaderSortVisibility(sectionId) {
     if (headerSortControls) {
         headerSortControls.style.display = sectionId === 'specimens' ? 'flex' : 'none';
     }
+    if (headerAggregateSortControls) {
+        headerAggregateSortControls.style.display = sectionId === 'aggregates' ? 'flex' : 'none';
+    }
     if (headerCarouselControls) {
         headerCarouselControls.style.display = sectionId === 'carousel' ? 'flex' : 'none';
     }
@@ -82,6 +89,8 @@ function renderSpecimens(specimensList = specimens) {
         <div class="card" data-type="specimen" data-id="${specimen.id}">
             <img src="${basePath}${specimen.thumbnail}" ${specimen.gifPath ? `data-gif="${basePath}${specimen.gifPath}"` : ''} alt="${specimen.title}" class="card-image">
             <div class="card-fallback" aria-hidden="true">${specimen.title}</div>
+            <div class="card-id">${specimen.id}</div>
+            <div class="card-date">${formatDate(specimen.date)}</div>
         </div>
     `).join('');
 
@@ -111,13 +120,19 @@ function renderSpecimens(specimensList = specimens) {
 }
 
 // Render aggregate cards.
-function renderAggregates() {
-    aggregatesGrid.innerHTML = aggregates.map(aggregate => `
+function renderAggregates(aggregatesList = aggregates) {
+    aggregatesGrid.innerHTML = aggregatesList.map(aggregate => `
         <div class="card" data-type="aggregate" data-id="${aggregate.id}">
             <img src="${basePath}${aggregate.thumbnail}" alt="${aggregate.title}" class="card-image">
             <div class="card-fallback" aria-hidden="true">${aggregate.title}</div>
+            <div class="card-id">${aggregate.id}</div>
+            <div class="card-date">${formatDate(aggregate.dateCreated)}</div>
         </div>
     `).join('');
+
+    if (aggregatesList.length === 0) {
+        aggregatesGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: var(--spacing-lg); color: var(--color-text-light);">No aggregates available.</p>';
+    }
 
     aggregatesGrid.querySelectorAll('.card-image').forEach(img => {
         const card = img.closest('.card');
@@ -339,6 +354,81 @@ function applySort() {
     }
     
     renderSpecimens(sorted);
+}
+
+// Setup aggregate sorting controls
+function setupAggregateSorting() {
+    const sortBtns = document.querySelectorAll('.aggregate-sort-btn');
+    sortBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const newSort = btn.getAttribute('data-sort');
+
+            if (newSort === 'random') {
+                currentAggregateSort = 'random';
+                currentAggregateDirection = 'asc';
+            } else {
+                if (currentAggregateSort === newSort) {
+                    currentAggregateDirection = currentAggregateDirection === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentAggregateSort = newSort;
+                    currentAggregateDirection = 'asc';
+                }
+            }
+
+            updateAggregateSortUI();
+            applyAggregateSort();
+        });
+    });
+    
+    updateAggregateSortUI();
+}
+
+// Update aggregate sort button UI
+function updateAggregateSortUI() {
+    const sortBtns = document.querySelectorAll('.aggregate-sort-btn');
+    
+    sortBtns.forEach(btn => {
+        if (btn.getAttribute('data-sort') === currentAggregateSort) {
+            btn.classList.add('active');
+            if (currentAggregateSort === 'random') {
+                btn.setAttribute('data-direction', '⟳');
+            } else {
+                btn.setAttribute('data-direction', currentAggregateDirection === 'asc' ? '↑' : '↓');
+            }
+        } else {
+            btn.classList.remove('active');
+            btn.removeAttribute('data-direction');
+        }
+    });
+}
+
+// Apply sort to aggregates and render
+function applyAggregateSort() {
+    let sorted = [...aggregates];
+    const isAscending = currentAggregateDirection === 'asc';
+    
+    switch (currentAggregateSort) {
+        case 'id':
+            sorted.sort((a, b) => isAscending 
+                ? a.id.localeCompare(b.id)
+                : b.id.localeCompare(a.id));
+            break;
+        case 'date':
+            sorted.sort((a, b) => {
+                const dateA = new Date(a.dateCreated);
+                const dateB = new Date(b.dateCreated);
+                return isAscending ? dateA - dateB : dateB - dateA;
+            });
+            break;
+        case 'random':
+            for (let i = sorted.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [sorted[i], sorted[j]] = [sorted[j], sorted[i]];
+            }
+            break;
+    }
+    
+    renderAggregates(sorted);
 }
 
 // Setup modal open/close behavior.
@@ -887,12 +977,14 @@ function renderCarousel() {
 
     const currentImage = carouselImages[currentCarouselIndex];
     container.innerHTML = `
-        <img src="${basePath}Manifestations/${currentImage.filename}" alt="${currentImage.caption || 'Gallery image'}" loading="lazy">
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <img src="${basePath}Manifestations/${currentImage.filename}" alt="${currentImage.caption || 'Gallery image'}" loading="lazy" style="max-width: 100%; max-height: 70vh; object-fit: contain;">
+            ${currentImage.caption ? `<div class="carousel-caption-below">${currentImage.caption}</div>` : ''}
+        </div>
     `;
 
     updateCarouselButtons();
     updateCarouselCounter();
-    updateCarouselCaption();
 }
 
 function setupCarouselControls() {
