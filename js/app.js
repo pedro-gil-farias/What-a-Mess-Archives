@@ -977,8 +977,8 @@ function renderCarousel() {
 
     const currentImage = carouselImages[currentCarouselIndex];
     container.innerHTML = `
-        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-            <img src="${basePath}Manifestations/${currentImage.filename}" alt="${currentImage.caption || 'Gallery image'}" loading="lazy" style="max-width: 100%; max-height: 70vh; object-fit: contain;">
+        <div class="carousel-media-column">
+            <img src="${basePath}Manifestations/${currentImage.filename}" alt="${currentImage.caption || 'Gallery image'}" loading="lazy">
             ${currentImage.caption ? `<div class="carousel-caption-below">${currentImage.caption}</div>` : ''}
         </div>
     `;
