@@ -262,7 +262,7 @@
       "latitude": 51.9031,
       "longitude": 4.5117,
       "date": "2023-04-29",
-      "description": "The final scan of the workshop is a box found in an underpass at the end of Rotterdam-Zuid metro station. The box was covered in stickers including the work of several staples of the Rotterdam sticker scene such as ExitRdm, Lempke, Harvey Ball. The group felt capturing it would make the perfect conclusion to a workshop dedicated to the annotated city.",
+      "description": "A box found in an underpass at the end of Rotterdam-Zuid metro station. The box was covered in stickers including the work of several staples of the Rotterdam sticker scene such as ExitRdm, Lempke, Harvey Ball. The group felt capturing it would make the perfect conclusion to a workshop dedicated to the annotated city.",
       "modelPath": "models/S021_StickerAltar.glb",
       "thumbnail": "images/S021_StickerAltar.png",
       "gifPath": ""
@@ -275,7 +275,7 @@
       "latitude": 52.52,
       "longitude": 13.405,
       "date": "2023-04-03",
-      "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
+      "description": "A snail sculpture found outside of <a href='https://www.maritiemmuseum.nl/'>Rotterdam’s Maritime Museum</a>. The enigmatic sculpture was never found again.",
       "modelPath": "models/S022_MaritimeSnail.glb",
       "thumbnail": "images/S022_MaritimeSnail.png",
       "gifPath": "images/S022_MaritimeSnail.gif"
@@ -288,7 +288,7 @@
       "latitude": 51.915826,
       "longitude": 4.476486,
       "date": "2023-03-17",
-      "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
+      "description": "The rusty entrance of <a href='https://worm.org/'>WORM</a> showing layers of paint, graffiti and stickers, including a portrait of TUPAC, presumably by mosaic artist Satoshi Nakamoto",
       "modelPath": "models/S023_RustyEntrance.glb",
       "thumbnail": "images/S023_RustyEntrance.png",
       "gifPath": ""
@@ -301,7 +301,7 @@
       "latitude": 51.915884,
       "longitude": 4.476879,
       "date": "2023-03-17",
-      "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
+      "description": "A clear sign in a secondary street indicating both a prohibited entrance and a stay clear warning",
       "modelPath": "models/S024_ClearSign.glb",
       "thumbnail": "images/S024_ClearSign.png",
       "gifPath": ""
@@ -314,7 +314,7 @@
       "latitude": 51.9234,
       "longitude": 4.4699,
       "date": "2023-04-29",
-      "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
+      "description": "A pop-up urinol, emerging from the ground when its most needed.",
       "modelPath": "models/S025_EmergingUrinol.glb",
       "thumbnail": "images/S025_EmergingUrinol.png",
       "gifPath": ""
@@ -327,7 +327,7 @@
       "latitude": 51.9233,
       "longitude": 4.4698,
       "date": "2023-05-04",
-      "description": "A weathered street corner capturing layers of urban history through posters, graffiti, and architectural details.",
+      "description": "The underground bicycle garage at Rotterdam central station. Due to the amount of bikes next to each other, it created a composite bike sculpture. Pretty accurate to the experience of trying to find your bike when you park it there.",
       "modelPath": "models/S026_BikeRack.glb",
       "thumbnail": "images/S026_BikeRack.png",
       "gifPath": ""
