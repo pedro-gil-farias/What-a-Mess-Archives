@@ -195,7 +195,8 @@ async function main() {
     }
 
     // A link that isn't a direct .glb (e.g. a Polycam page) is kept as a reference and the file is added by hand.
-    const modelLink = (form['Link to the 3D model'] || '').trim();
+    // The old label is kept so issues opened before the rename still work.
+    const modelLink = (form['Link to the 3D model'] || form['Link to the 3D model (.glb)'] || '').trim();
     if (!modelLink) fail('A link to the 3D model is required');
     const downloaded = await download(modelLink, MAX_MODEL_BYTES);
     const modelBuffer = downloaded.subarray(0, 4).toString('ascii') === 'glTF' ? downloaded : null;
