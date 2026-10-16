@@ -124,6 +124,47 @@ function parseNumber(value, name, min, max) {
     return number;
 }
 
+function isGoogleMapsHost(hostname) {
+    return /(^|\.)google\.[a-z.]+$/.test(hostname) || hostname === 'maps.app.goo.gl' || hostname === 'goo.gl';
+}
+
+function coordinatesFromText(text) {
+    const decoded = decodeURIComponent(text);
+    const patterns = [
+        /!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/,
+        /@(-?\d+\.\d+),(-?\d+\.\d+)/,
+        /[?&](?:q|ll|query|destination)=(-?\d+\.\d+),\s*(-?\d+\.\d+)/
+    ];
+    for (const pattern of patterns) {
+        const match = decoded.match(pattern);
+        if (match) return { latitude: Number(match[1]), longitude: Number(match[2]) };
+    }
+    return null;
+}
+
+async function coordinatesFromMapsLink(rawUrl) {
+    let url;
+    try {
+        url = new URL(rawUrl);
+    } catch {
+        fail(`The Google Maps link is not a valid link: ${rawUrl}`);
+    }
+
+    // Short links only reveal coordinates after redirects, which are followed manually.
+    for (let hop = 0; hop < 6; hop++) {
+        if (!isGoogleMapsHost(url.hostname)) fail(`The Google Maps link points to ${url.hostname}, not Google`);
+        const found = coordinatesFromText(url.toString());
+        if (found) return found;
+
+        await assertSafeUrl(url);
+        const response = await fetch(url, { redirect: 'manual' });
+        const next = response.headers.get('location');
+        if (!(response.status >= 300 && response.status < 400 && next)) break;
+        url = new URL(next, url);
+    }
+    return fail('Could not find coordinates in the Google Maps link. Share the link of a specific spot, or fill in latitude and longitude');
+}
+
 async function main() {
     const body = process.env.ISSUE_BODY || '';
     const form = parseIssueForm(body);
@@ -140,8 +181,18 @@ async function main() {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(date))) {
         fail('Date must be in YYYY-MM-DD format');
     }
-    const latitude = parseNumber(form['Latitude'], 'Latitude', -90, 90);
-    const longitude = parseNumber(form['Longitude'], 'Longitude', -180, 180);
+    let latitude;
+    let longitude;
+    const latInput = (form['Latitude (optional)'] || '').trim();
+    const lonInput = (form['Longitude (optional)'] || '').trim();
+    if (latInput && lonInput) {
+        latitude = parseNumber(latInput, 'Latitude', -90, 90);
+        longitude = parseNumber(lonInput, 'Longitude', -180, 180);
+    } else {
+        const fromLink = await coordinatesFromMapsLink((form['Google Maps link'] || '').trim());
+        latitude = parseNumber(String(fromLink.latitude), 'Latitude', -90, 90);
+        longitude = parseNumber(String(fromLink.longitude), 'Longitude', -180, 180);
+    }
 
     const modelBuffer = await download(form['Link to the 3D model (.glb)'] || '', MAX_MODEL_BYTES);
     if (modelBuffer.subarray(0, 4).toString('ascii') !== 'glTF') {

@@ -23,25 +23,35 @@ body:
     validations:
       required: true
   - type: input
-    id: date
+    id: maps_url
     attributes:
-      label: Date scanned
-      description: Format YYYY-MM-DD.
-      placeholder: "2026-03-14"
+      label: Google Maps link
+      description: Find the spot on Google Maps, right-click it (or long-press on a phone), choose Share, and copy the link. Coordinates are read from this link.
+      placeholder: "https://maps.app.goo.gl/..."
     validations:
       required: true
   - type: input
     id: latitude
     attributes:
-      label: Latitude
+      label: Latitude (optional)
+      description: Only fill this in if you want to override the link. Right-click the spot on Google Maps and click the numbers at the top of the menu to copy them.
       placeholder: "51.9225"
     validations:
-      required: true
+      required: false
   - type: input
     id: longitude
     attributes:
-      label: Longitude
+      label: Longitude (optional)
+      description: Same as above, the second number.
       placeholder: "4.4792"
+    validations:
+      required: false
+  - type: input
+    id: date
+    attributes:
+      label: Date scanned
+      description: Format YYYY-MM-DD.
+      placeholder: "2026-03-14"
     validations:
       required: true
   - type: textarea
