@@ -462,6 +462,20 @@
       "thumbnail": "Specimens/images/S046_FelyxScooter.png",
       "gifPath": "",
       "captureUrl": "https://poly.cam/capture/908B691A-EC32-4E0F-B949-FD1EB4B3E466"
+    },
+    {
+      "id": "S047",
+      "title": "Sameiro Door",
+      "location": "Penafiel, Portugal",
+      "latitude": 41.208725,
+      "longitude": -8.275426,
+      "date": "2026-02-15",
+      "description": "...",
+      "contributor": "Pedro Gil Farias",
+      "modelPath": "Specimens/models/S047_SameiroDoor.glb",
+      "thumbnail": "Specimens/images/S047_SameiroDoor.png",
+      "gifPath": "",
+      "captureUrl": "https://poly.cam/capture/5C28B3F7-F055-4719-B48F-3A33A0C79B0A"
     }
   ]
 }
