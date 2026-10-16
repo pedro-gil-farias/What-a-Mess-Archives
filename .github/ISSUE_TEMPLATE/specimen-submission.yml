@@ -6,8 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for contributing. A maintainer reviews every submission before it goes live.
-        Your model is downloaded from the link you give, optimized, and hosted in this repository.
+        Thanks for contributing. We'll review every submission before it goes live.
   - type: input
     id: title
     attributes:
@@ -74,7 +73,7 @@ body:
       label: Link to a thumbnail image (PNG or JPG)
       description: A direct download link, around 400x280 px or larger.
     validations:
-      required: true
+      required: false
   - type: input
     id: gif_url
     attributes:
