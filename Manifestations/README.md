@@ -22,15 +22,6 @@ This folder contains images for the Gallery carousel.
 }
 ```
 
-Captions are optional - you can leave them as empty strings `""` if you don't want a caption for a specific image.
-
-## Features:
-
-- **Navigation**: Use the ← → buttons or keyboard arrow keys to navigate
-- **Counter**: Shows which image you're viewing (e.g., "1 / 5")
-- **Captions**: Optional text descriptions displayed below each image
-- **Responsive**: Images automatically scale to fit the screen
-
 ## Supported formats:
 
 - JPG/JPEG
@@ -43,4 +34,4 @@ Captions are optional - you can leave them as empty strings `""` if you don't wa
 - Keep filenames simple (no spaces, special characters)
 - Images will appear in the order listed in the JSON file
 - You can reorder images by changing their order in the JSON array
-- Captions are optional - leave them out if you don't need them
+- Captions are optional but recommended
