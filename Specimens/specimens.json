@@ -448,7 +448,20 @@
       "modelPath": "models/S045_CastleCorner.glb",
       "thumbnail": "images/S045_CastleCorner.png",
       "gifPath": ""
+    },
+    {
+      "id": "S046",
+      "title": "Felyx Scooter",
+      "location": "Rotterdam, The Netherlands",
+      "latitude": 51.924117979414646,
+      "longitude": 4.488441908502638,
+      "date": "2024-07-09",
+      "description": "A common sight in Rotterdam, the only thing unusual about it is that it's still in one piece",
+      "contributor": "Pedro Gil Farias",
+      "modelPath": "Specimens/models/S046_FelyxScooter.glb",
+      "thumbnail": "",
+      "gifPath": "",
+      "captureUrl": "https://poly.cam/capture/908B691A-EC32-4E0F-B949-FD1EB4B3E466"
     }
-    
   ]
 }
