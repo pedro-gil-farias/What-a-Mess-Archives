@@ -16,6 +16,12 @@ customElements.whenDefined('model-viewer').then(() => {
         'https://cdn.jsdelivr.net/npm/meshoptimizer@0.20.0/meshopt_decoder.js';
 });
 
+// Drops trailing zeros, so 51.9 stays 51.9 and 51.92254 becomes 51.9225.
+function formatCoordinate(value) {
+    const number = Number(value);
+    return Number.isFinite(number) ? String(Math.round(number * 10000) / 10000) : value;
+}
+
 function resolveSpecimenModelPath(modelPath) {
     if (!modelPath) return '';
     const normalizedPath = modelPath.replace(/^\/?(?:Specimens\/)?models\//, '');
@@ -521,11 +527,11 @@ function openSpecimenModal(id, skipHistory = false) {
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">Latitude</div>
-                    <div class="meta-value">${specimen.latitude}</div>
+                    <div class="meta-value">${formatCoordinate(specimen.latitude)}</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">Longitude</div>
-                    <div class="meta-value">${specimen.longitude}</div>
+                    <div class="meta-value">${formatCoordinate(specimen.longitude)}</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">Specimen ID</div>
