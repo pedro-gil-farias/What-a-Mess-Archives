@@ -63,8 +63,8 @@ body:
   - type: input
     id: model_url
     attributes:
-      label: Link to the 3D model (.glb)
-      description: A direct download link to a GLB file. Dropbox and Google Drive share links work. Use https.
+      label: Link to the 3D model
+      description: A Polycam or other capture link, or a direct download link to a .glb file (Dropbox works well).
     validations:
       required: true
   - type: input

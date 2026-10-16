@@ -194,11 +194,12 @@ async function main() {
         longitude = parseNumber(String(fromLink.longitude), 'Longitude', -180, 180);
     }
 
-    const modelBuffer = await download(form['Link to the 3D model (.glb)'] || '', MAX_MODEL_BYTES);
-    if (modelBuffer.subarray(0, 4).toString('ascii') !== 'glTF') {
-        fail('The model link did not return a binary .glb file (check it is a direct download link)');
-    }
-
+    // A link that isn't a direct .glb (e.g. a Polycam page) is kept as a reference and the file is added by hand.
+    const modelLink = (form['Link to the 3D model'] || '').trim();
+    if (!modelLink) fail('A link to the 3D model is required');
+    const downloaded = await download(modelLink, MAX_MODEL_BYTES);
+    const modelBuffer = downloaded.subarray(0, 4).toString('ascii') === 'glTF' ? downloaded : null;
+    const captureUrl = modelBuffer ? '' : new URL(modelLink).toString();
     let thumbBuffer = null;
     let thumbExt = '';
     const thumbLink = (form['Link to a thumbnail image (PNG or JPG)'] || '').trim();
@@ -225,12 +226,14 @@ async function main() {
     await mkdir(IMAGES_DIR, { recursive: true });
 
     const modelPath = `${MODELS_DIR}/${base}.glb`;
-    await writeFile(`${modelPath}.tmp`, modelBuffer);
-    execFileSync('npx', [
-        '--yes', '@gltf-transform/cli', 'optimize', `${modelPath}.tmp`, modelPath,
-        '--compress', 'meshopt', '--texture-compress', 'webp', '--texture-size', '2048'
-    ], { stdio: 'inherit', shell: process.platform === 'win32' });
-    await unlink(`${modelPath}.tmp`);
+    if (modelBuffer) {
+        await writeFile(`${modelPath}.tmp`, modelBuffer);
+        execFileSync('npx', [
+            '--yes', '@gltf-transform/cli', 'optimize', `${modelPath}.tmp`, modelPath,
+            '--compress', 'meshopt', '--texture-compress', 'webp', '--texture-size', '2048'
+        ], { stdio: 'inherit', shell: process.platform === 'win32' });
+        await unlink(`${modelPath}.tmp`);
+    }
 
     let thumbnail = '';
     if (thumbBuffer) {
@@ -254,7 +257,8 @@ async function main() {
         contributor,
         modelPath,
         thumbnail,
-        gifPath
+        gifPath,
+        ...(captureUrl ? { captureUrl } : {})
     };
 
     // Insert before the closing bracket so the rest of the file stays byte-identical.
@@ -266,7 +270,9 @@ async function main() {
     await writeFile(SPECIMENS_JSON, updated);
 
     console.log(`Added ${id} (${base})`);
-    if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `id=${id}\n`);
+    if (process.env.GITHUB_OUTPUT) {
+        appendFileSync(process.env.GITHUB_OUTPUT, `id=${id}\nmodel_path=${modelPath}\nmodel_missing=${modelBuffer ? 'false' : 'true'}\n`);
+    }
 }
 
 main().catch((error) => {
