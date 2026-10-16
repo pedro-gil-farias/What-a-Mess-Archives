@@ -201,13 +201,17 @@ async function main() {
     const downloaded = await download(modelLink, MAX_MODEL_BYTES);
     const modelBuffer = downloaded.subarray(0, 4).toString('ascii') === 'glTF' ? downloaded : null;
     const captureUrl = modelBuffer ? '' : new URL(modelLink).toString();
+    // Without a usable image the entry still gets the expected .png path so the file can be added by hand.
     let thumbBuffer = null;
-    let thumbExt = '';
+    let thumbExt = 'png';
     const thumbLink = (form['Link to a thumbnail image (PNG or JPG)'] || '').trim();
     if (thumbLink) {
-        thumbBuffer = await download(thumbLink, MAX_IMAGE_BYTES);
-        thumbExt = imageExtension(thumbBuffer);
-        if (thumbExt !== 'png' && thumbExt !== 'jpg') fail('The thumbnail link did not return a PNG or JPG image');
+        const downloaded = await download(thumbLink, MAX_IMAGE_BYTES);
+        const ext = imageExtension(downloaded);
+        if (ext === 'png' || ext === 'jpg') {
+            thumbBuffer = downloaded;
+            thumbExt = ext;
+        }
     }
 
     let gifBuffer = null;
@@ -236,11 +240,8 @@ async function main() {
         await unlink(`${modelPath}.tmp`);
     }
 
-    let thumbnail = '';
-    if (thumbBuffer) {
-        thumbnail = `${IMAGES_DIR}/${base}.${thumbExt}`;
-        await writeFile(thumbnail, thumbBuffer);
-    }
+    const thumbnail = `${IMAGES_DIR}/${base}.${thumbExt}`;
+    if (thumbBuffer) await writeFile(thumbnail, thumbBuffer);
     let gifPath = '';
     if (gifBuffer) {
         gifPath = `${IMAGES_DIR}/${base}.gif`;
@@ -272,7 +273,13 @@ async function main() {
 
     console.log(`Added ${id} (${base})`);
     if (process.env.GITHUB_OUTPUT) {
-        appendFileSync(process.env.GITHUB_OUTPUT, `id=${id}\nmodel_path=${modelPath}\nmodel_missing=${modelBuffer ? 'false' : 'true'}\n`);
+        appendFileSync(process.env.GITHUB_OUTPUT, [
+            `id=${id}`,
+            `model_path=${modelPath}`,
+            `model_missing=${modelBuffer ? 'false' : 'true'}`,
+            `thumbnail_path=${thumbnail}`,
+            `thumbnail_missing=${thumbBuffer ? 'false' : 'true'}`
+        ].join('\n') + '\n');
     }
 }
 

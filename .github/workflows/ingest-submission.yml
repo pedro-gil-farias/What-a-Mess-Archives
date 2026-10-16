@@ -49,13 +49,17 @@ jobs:
           NEW_ID: ${{ steps.ingest.outputs.id }}
           MODEL_MISSING: ${{ steps.ingest.outputs.model_missing }}
           MODEL_PATH: ${{ steps.ingest.outputs.model_path }}
+          THUMBNAIL_MISSING: ${{ steps.ingest.outputs.thumbnail_missing }}
+          THUMBNAIL_PATH: ${{ steps.ingest.outputs.thumbnail_path }}
         run: |
           gh label create ingested --repo "$GITHUB_REPOSITORY" --force --color 0e8a16
           gh issue edit "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --add-label ingested
+          message="Added to the archive as $NEW_ID."
           if [ "$MODEL_MISSING" = "true" ]; then
-            message="Added to the archive as $NEW_ID. The model link was not a direct .glb, so add the file by hand at \`$MODEL_PATH\`."
-          else
-            message="Added to the archive as $NEW_ID. Thank you!"
+            message="$message The model link was not a direct .glb, so add the model by hand at \`$MODEL_PATH\`."
+          fi
+          if [ "$THUMBNAIL_MISSING" = "true" ]; then
+            message="$message No usable thumbnail was found, so add the image by hand at \`$THUMBNAIL_PATH\`."
           fi
           gh issue close "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --comment "$message"
 
