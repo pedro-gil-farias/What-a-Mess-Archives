@@ -199,9 +199,14 @@ async function main() {
         fail('The model link did not return a binary .glb file (check it is a direct download link)');
     }
 
-    const thumbBuffer = await download(form['Link to a thumbnail image (PNG or JPG)'] || '', MAX_IMAGE_BYTES);
-    const thumbExt = imageExtension(thumbBuffer);
-    if (thumbExt !== 'png' && thumbExt !== 'jpg') fail('The thumbnail link did not return a PNG or JPG image');
+    let thumbBuffer = null;
+    let thumbExt = '';
+    const thumbLink = (form['Link to a thumbnail image (PNG or JPG)'] || '').trim();
+    if (thumbLink) {
+        thumbBuffer = await download(thumbLink, MAX_IMAGE_BYTES);
+        thumbExt = imageExtension(thumbBuffer);
+        if (thumbExt !== 'png' && thumbExt !== 'jpg') fail('The thumbnail link did not return a PNG or JPG image');
+    }
 
     let gifBuffer = null;
     const gifLink = (form['Link to an animated GIF (optional)'] || '').trim();
@@ -227,8 +232,11 @@ async function main() {
     ], { stdio: 'inherit', shell: process.platform === 'win32' });
     await unlink(`${modelPath}.tmp`);
 
-    const thumbnail = `${IMAGES_DIR}/${base}.${thumbExt}`;
-    await writeFile(thumbnail, thumbBuffer);
+    let thumbnail = '';
+    if (thumbBuffer) {
+        thumbnail = `${IMAGES_DIR}/${base}.${thumbExt}`;
+        await writeFile(thumbnail, thumbBuffer);
+    }
     let gifPath = '';
     if (gifBuffer) {
         gifPath = `${IMAGES_DIR}/${base}.gif`;
