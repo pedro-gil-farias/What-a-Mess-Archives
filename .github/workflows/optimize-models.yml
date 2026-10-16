@@ -1,0 +1,45 @@
+name: Optimize models
+
+on:
+  push:
+    paths:
+      - 'Specimens/models/**.glb'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Optimize uncompressed GLBs
+        run: |
+          changed=0
+          for f in Specimens/models/*.glb; do
+            # The GLB JSON header lists extensionsUsed in plain text.
+            if head -c 65536 "$f" | grep -qa "EXT_meshopt_compression"; then
+              continue
+            fi
+            echo "Optimizing $f"
+            npx --yes @gltf-transform/cli optimize "$f" "$f.tmp" \
+              --compress meshopt --texture-compress webp --texture-size 2048
+            mv "$f.tmp" "$f"
+            changed=1
+          done
+          echo "changed=$changed" >> "$GITHUB_ENV"
+
+      - name: Commit optimized models
+        if: env.changed == '1'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Specimens/models
+          git commit -m "Optimize GLB models"
+          git push

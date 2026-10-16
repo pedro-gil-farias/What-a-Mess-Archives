@@ -1,0 +1,58 @@
+name: Ingest specimen submission
+
+on:
+  issues:
+    types: [labeled]
+
+# One run at a time so specimen IDs are assigned sequentially.
+concurrency:
+  group: ingest-submission
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  ingest:
+    if: >-
+      github.event.label.name == 'approved' &&
+      contains(github.event.issue.labels.*.name, 'specimen-submission') &&
+      !contains(github.event.issue.labels.*.name, 'ingested')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Add specimen
+        id: ingest
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: node scripts/ingest-submission.mjs
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Specimens
+          git commit -m "Add ${{ steps.ingest.outputs.id }} from submission #${ISSUE_NUMBER}"
+          git push
+
+      - name: Close the issue
+        run: |
+          gh label create ingested --repo "$GITHUB_REPOSITORY" --force --color 0e8a16
+          gh issue edit "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --add-label ingested
+          gh issue close "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
+            --comment "Added to the archive as ${{ steps.ingest.outputs.id }}. Thank you!"
+
+      - name: Report failure
+        if: failure()
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
+            --body "The submission could not be added automatically. See the [workflow run]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID) for the reason, fix the issue text, then remove and re-add the \`approved\` label."

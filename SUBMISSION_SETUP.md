@@ -47,8 +47,8 @@ Visitors can submit new specimens through the "Submit" page with the following c
    - Visitor's email address
 4. **You review and approve:**
    - Download the files
-   - Add files to your GitHub repo (`models/`, `images/`)
-   - Add entry to `js/data.json`
+   - Add files to your GitHub repo (`Specimens/models/`, `Specimens/images/`)
+   - Add entry to `Specimens/specimens.json`
    - Optionally reply to the submission via Formspree
 
 ## Form Fields
@@ -70,9 +70,9 @@ The submission form collects:
 - **3D Model**: GLB or GLTF format
 - **Animated GIF**: Plays on hover
 
-## Data.json Entry Format
+## Specimen JSON Entry Format
 
-When you approve a submission, add it to `js/data.json`:
+When you approve a submission, add it to `Specimens/specimens.json`:
 
 ```json
 {
@@ -84,9 +84,9 @@ When you approve a submission, add it to `js/data.json`:
     "date": "2024-02-11",
     "description": "Description of the specimen...",
     "tags": ["industrial", "materials"],
-    "modelPath": "models/S012_BrokenTile.glb",
-    "thumbnail": "images/S012_BrokenTile.png",
-    "gifPath": "images/S012_BrokenTile.gif"
+   "modelPath": "Specimens/models/S012_BrokenTile.glb",
+   "thumbnail": "Specimens/images/S012_BrokenTile.png",
+   "gifPath": "Specimens/images/S012_BrokenTile.gif"
 }
 ```
 
@@ -128,16 +128,16 @@ If approved:
 - Clone/pull your GitHub repo
 - Create a new specimen ID (e.g., S012)
 - Move the files to appropriate folders:
-  - `models/` for the GLB file
-  - `images/` for PNG/JPG and GIF files
+   - `Specimens/models/` for the GLB file
+   - `Specimens/images/` for PNG/JPG and GIF files
 - Rename files: `S012_[title].ext`
-- Add entry to `js/data.json`
+- Add entry to `Specimens/specimens.json`
 - Commit and push to GitHub
 
 ### 3. Reject Submissions
 If not appropriate:
 - Optionally reply with feedback (premium feature)
-- Simply don't add it to data.json
+- Simply don't add it to `Specimens/specimens.json`
 - Archive/delete the email
 
 ## File Size Recommendations

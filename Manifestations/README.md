@@ -4,8 +4,8 @@ This folder contains images for the Gallery carousel.
 
 ## How to add images:
 
-1. **Add your images**: Simply drop your image files into this folder
-2. **Update the JSON file**: Edit `js/manifestations.json` and add the filename and caption:
+1. **Add your images**: Drop your image files into `Manifestations/images/`
+2. **Update the JSON file**: Edit `Manifestations/manifestations.json` and add the filename and caption:
 
 ```json
 {

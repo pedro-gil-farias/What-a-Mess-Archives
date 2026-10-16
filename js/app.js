@@ -5,6 +5,23 @@ const basePath = window.location.pathname.includes('What-a-Mess-Archives')
     ? '/What-a-Mess-Archives/'
     : '/';
 
+function resolveTypeAssetPath(typeFolder, assetPath) {
+    if (!assetPath) return '';
+    const normalizedPath = assetPath.replace(new RegExp(`^/?(?:${typeFolder}/)?images/`), '');
+    return `${typeFolder}/images/${normalizedPath}`;
+}
+
+customElements.whenDefined('model-viewer').then(() => {
+    customElements.get('model-viewer').meshoptDecoderLocation =
+        'https://cdn.jsdelivr.net/npm/meshoptimizer@0.20.0/meshopt_decoder.js';
+});
+
+function resolveSpecimenModelPath(modelPath) {
+    if (!modelPath) return '';
+    const normalizedPath = modelPath.replace(/^\/?(?:Specimens\/)?models\//, '');
+    return `Specimens/models/${normalizedPath}`;
+}
+
 // In-memory data/state.
 let specimens = [];
 let aggregates = [];
@@ -31,8 +48,8 @@ const headerCarouselControls = document.getElementById('header-carousel-controls
 async function loadData() {
     try {
         const [specimensResponse, aggregatesResponse] = await Promise.all([
-            fetch(`${basePath}js/specimens.json`),
-            fetch(`${basePath}js/aggregates.json`)
+            fetch(`${basePath}Specimens/specimens.json`),
+            fetch(`${basePath}Aggregates/aggregates.json`)
         ]);
         if (!specimensResponse.ok) throw new Error('Failed to load specimens');
         if (!aggregatesResponse.ok) throw new Error('Failed to load aggregates');
@@ -87,7 +104,7 @@ function updateHeaderSortVisibility(sectionId) {
 function renderSpecimens(specimensList = specimens) {
     specimensGrid.innerHTML = specimensList.map(specimen => `
         <div class="card" data-type="specimen" data-id="${specimen.id}">
-            <img src="${basePath}${specimen.thumbnail}" ${specimen.gifPath ? `data-gif="${basePath}${specimen.gifPath}"` : ''} alt="${specimen.title}" class="card-image">
+            <img src="${basePath}${resolveTypeAssetPath('Specimens', specimen.thumbnail)}" ${specimen.gifPath ? `data-gif="${basePath}${resolveTypeAssetPath('Specimens', specimen.gifPath)}"` : ''} alt="${specimen.title}" class="card-image">
             <div class="card-fallback" aria-hidden="true">${specimen.title}</div>
             <div class="card-id">${specimen.id}</div>
             <div class="card-date">${formatDate(specimen.date)}</div>
@@ -123,7 +140,7 @@ function renderSpecimens(specimensList = specimens) {
 function renderAggregates(aggregatesList = aggregates) {
     aggregatesGrid.innerHTML = aggregatesList.map(aggregate => `
         <div class="card" data-type="aggregate" data-id="${aggregate.id}">
-            <img src="${basePath}${aggregate.thumbnail}" alt="${aggregate.title}" class="card-image">
+            <img src="${basePath}${resolveTypeAssetPath('Aggregates', aggregate.thumbnail)}" alt="${aggregate.title}" class="card-image">
             <div class="card-fallback" aria-hidden="true">${aggregate.title}</div>
             <div class="card-id">${aggregate.id}</div>
             <div class="card-date">${formatDate(aggregate.dateCreated)}</div>
@@ -472,7 +489,7 @@ function openSpecimenModal(id, skipHistory = false) {
     modalBody.innerHTML = `
         <div class="detail-viewer">
             <model-viewer
-                src="${basePath}${specimen.modelPath}"
+                src="${basePath}${resolveSpecimenModelPath(specimen.modelPath)}"
                 alt="${specimen.title}"
                 camera-controls
                 auto-rotate
@@ -489,7 +506,7 @@ function openSpecimenModal(id, skipHistory = false) {
 
                 <div class="detail-main">
                 <div class="meta-value">
-                        <a href="${basePath}${specimen.modelPath}" download class="download-link">Download file</a>
+                    <a href="${basePath}${resolveSpecimenModelPath(specimen.modelPath)}" download class="download-link">Download file</a>
                 </div>
                 </div>
         </div>
@@ -637,13 +654,18 @@ function openAggregateModal(id, skipHistory = false) {
             'https://esm.sh/three@0.152.2/examples/jsm/loaders/RGBELoader.js'
         );
 
-        window.__threeModules = { THREE, GLTFLoader, OrbitControls, RGBELoader };
+        const { MeshoptDecoder } = await loadModuleWithFallback(
+            'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/libs/meshopt_decoder.module.js',
+            'https://esm.sh/three@0.152.2/examples/jsm/libs/meshopt_decoder.module.js'
+        );
+
+        window.__threeModules = { THREE, GLTFLoader, OrbitControls, RGBELoader, MeshoptDecoder };
         return window.__threeModules;
     }
 
     // Build the Three.js scene for the aggregate collage.
     async function setupDustballCollage() {
-        const { THREE, GLTFLoader, OrbitControls, RGBELoader } = await ensureThreeModules();
+        const { THREE, GLTFLoader, OrbitControls, RGBELoader, MeshoptDecoder } = await ensureThreeModules();
 
         // Find the container in the modal and clear previous renders.
         const container = document.getElementById('dustball-collage');
@@ -724,12 +746,13 @@ function openAggregateModal(id, skipHistory = false) {
         // Pick up to 5 GLB files from the aggregate specimens (or fallback to generic names).
         let glbFiles = aggregateSpecimens
             .slice(0, 5)
-            .map(s => s.modelPath ? basePath + s.modelPath : null)
+            .map(s => s.modelPath ? basePath + resolveSpecimenModelPath(s.modelPath) : null)
             .filter(Boolean);
         // Fallback if not enough
-        while (glbFiles.length < 5) glbFiles.push(basePath + 'models/model' + (glbFiles.length + 1) + '.glb');
+        while (glbFiles.length < 5) glbFiles.push(basePath + 'Specimens/models/model' + (glbFiles.length + 1) + '.glb');
 
         const loader = new GLTFLoader();
+        loader.setMeshoptDecoder(MeshoptDecoder);
         let loadedCount = 0;
 
         // Random point in a sphere for a loose collage layout.
@@ -808,6 +831,10 @@ function openAggregateModal(id, skipHistory = false) {
             loader.load(file, (gltf) => {
                 const mesh = gltf.scene;
                 mesh.traverse((child) => {
+                    // Optimized unlit models ship without normals, which lit materials need.
+                    if (child.isMesh && !child.geometry.attributes.normal) {
+                        child.geometry.computeVertexNormals();
+                    }
                     if (child.isMesh && child.material) {
                         // Convert materials to ensure shadow support
                         if (Array.isArray(child.material)) {
@@ -945,7 +972,7 @@ const AUTOPLAY_INTERVAL = 5000; // 5 seconds
 async function setupCarousel() {
     try {
         // Load manifestations from JSON file
-        const response = await fetch(`${basePath}js/manifestations.json`);
+        const response = await fetch(`${basePath}Manifestations/manifestations.json`);
         if (!response.ok) {
             console.log('No manifestations.json found, carousel will be empty');
             return;
@@ -978,7 +1005,7 @@ function renderCarousel() {
     const currentImage = carouselImages[currentCarouselIndex];
     container.innerHTML = `
         <div class="carousel-media-column">
-            <img src="${basePath}Manifestations/${currentImage.filename}" alt="${currentImage.caption || 'Gallery image'}" loading="lazy">
+            <img src="${basePath}Manifestations/images/${currentImage.filename}" alt="${currentImage.caption || 'Gallery image'}" loading="lazy">
             ${currentImage.caption ? `<div class="carousel-caption-below">${currentImage.caption}</div>` : ''}
         </div>
     `;
