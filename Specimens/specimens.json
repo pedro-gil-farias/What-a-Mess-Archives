@@ -476,6 +476,20 @@
       "thumbnail": "Specimens/images/S047_SameiroDoor.png",
       "gifPath": "",
       "captureUrl": "https://poly.cam/capture/5C28B3F7-F055-4719-B48F-3A33A0C79B0A"
+    },
+        {
+      "id": "S048",
+      "title": "Fallen Family Tree",
+      "location": "Gothenburg, Sweden",
+      "latitude": 57.68,
+      "longitude": 11.94,
+      "date": "2024-01-31",
+      "description": "A tree planted to represent the deceased family members of the estate, has fallen.",
+      "contributor": "Hugo Pilate",
+      "modelPath": "S048_FallenFamilyTree.glb",
+      "thumbnail": "",
+      "gifPath": "",
+      "captureUrl": ""
     }
   ]
 }
